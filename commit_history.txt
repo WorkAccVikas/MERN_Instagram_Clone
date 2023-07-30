@@ -1,0 +1,11 @@
+1. BD : 
+    - Initial commit 
+    - Connect mongodb 
+    - Create User Schema 
+    - Add loggingMiddleware (console.log not printed when NODE_ENV = 'production')
+    - Add morgan for which api executed and show on terminal on VSC 
+    - Add two separate file for production and development (Env variable changes as per NODE_ENV)
+    - Add two routes 
+        - /signup
+        - /signin
+    - Implement JWT at '/signin'
