@@ -13,11 +13,6 @@ router.get("/", (req, res) => {
   });
 });
 
-// POINT : PROTECTED Route
-router.get("/protected", requireLogin, (req, res) => {
-  res.status(200).json({ message: "Protected Route" });
-});
-
 // POINT : SIGNUP Route
 router.post("/signup", (req, res) => {
   try {

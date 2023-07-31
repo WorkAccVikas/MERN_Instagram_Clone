@@ -7,6 +7,7 @@ const config = require("./config/config");
 const userRouter = require("./routes/users");
 const loggingMiddleware = require("./middlewares/loggingMiddleware");
 const authRoute = require("./routes/auth");
+const postRoute = require("./routes/post");
 const mongoConnection = require("./connection/mongo_connection");
 const userModel = require("./model/User");
 
@@ -55,6 +56,8 @@ app.use(express.json());
 
 // POINT : add auth Route
 app.use(authRoute);
+// POINT : add post Route
+app.use(postRoute);
 
 // app.get("/", (req, res) => {
 //   console.log("Root route");
