@@ -3,6 +3,7 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const userModel = require("../model/User");
+const requireLogin = require("../middlewares/requireLogin");
 const { JWT_SECRET } = require("../config/config");
 
 router.get("/", (req, res) => {
@@ -10,6 +11,11 @@ router.get("/", (req, res) => {
   res.status(200).json({
     msg: "Hello World",
   });
+});
+
+// POINT : PROTECTED Route
+router.get("/protected", requireLogin, (req, res) => {
+  res.status(200).json({ message: "Protected Route" });
 });
 
 // POINT : SIGNUP Route
@@ -88,7 +94,7 @@ router.post("/signin", (req, res) => {
               // NOTE : Create jwt token
               // ACTION : Create jwt token
               const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET, {
-                expiresIn: "1m",
+                expiresIn: "1d",
               });
               return res.status(200).json({ token });
             }
