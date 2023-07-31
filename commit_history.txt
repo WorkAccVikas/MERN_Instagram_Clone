@@ -23,3 +23,8 @@
 
 5. BD : 
     - Add /mypost route
+
+6. FD : 
+    - Add materializecss CDN link in index.html (Visit : https://materializecss.com/getting-started.html)
+    - Add Navbar (Component)
+    - Learn react-router-dom v6 (Navbar + Component) (Visit : https://www.youtube.com/watch?v=B0vZGTGgIdc&ab_channel=Arslan)
