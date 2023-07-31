@@ -13,7 +13,7 @@ router.get("/", (req, res) => {
   });
 });
 
-// POINT : SIGNUP Route
+// POINT : For Sign-Up
 router.post("/signup", (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -60,7 +60,7 @@ router.post("/signup", (req, res) => {
   }
 });
 
-// POINT : SIGNIN Route
+// POINT : For Sign-In
 router.post("/signin", (req, res) => {
   try {
     const { email, password } = req.body;

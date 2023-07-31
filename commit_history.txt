@@ -17,3 +17,9 @@
     - Remove /protected 
     - Add /createpost route 
     - Create Post Schema 
+
+4. BD :
+    - Add /allpost route
+
+5. BD : 
+    - Add /mypost route

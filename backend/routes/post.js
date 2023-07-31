@@ -4,6 +4,22 @@ const mongoose = require("mongoose");
 const postModel = require("../model/Post");
 const requireLogin = require("../middlewares/requireLogin");
 
+// POINT : For finding all posts of all users
+router.get("/allpost", async (req, res) => {
+  try {
+    /* ACTION : Find all posts and populate postedBy field and 
+    show only _id, name and then sort by latest post created by using createdAt */
+    const post = await postModel
+      .find({})
+      .populate("postedBy", "_id name")
+      .sort("-createdAt");
+    return res.status(200).json({ post, totalCount: post.length });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// POINT : Create new post
 router.post("/createpost", requireLogin, (req, res) => {
   try {
     const { title, body } = req.body;
@@ -36,6 +52,23 @@ router.post("/createpost", requireLogin, (req, res) => {
       .catch((err) => {
         return res.status(500).json({ error: "Internal Error" });
       });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// POINT : Find all post as per particular user
+router.get("/mypost", requireLogin, async (req, res) => {
+  try {
+    const { _id } = req.user;
+
+    // ACTION : Latest post at start
+    const myPost = await postModel
+      .find({ postedBy: _id })
+      .populate("postedBy", "_id name")
+      .sort("-createdAt");
+
+    return res.status(200).json({ myPost, totalCount: myPost.length });
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }
