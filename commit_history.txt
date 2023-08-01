@@ -28,3 +28,6 @@
     - Add materializecss CDN link in index.html (Visit : https://materializecss.com/getting-started.html)
     - Add Navbar (Component)
     - Learn react-router-dom v6 (Navbar + Component) (Visit : https://www.youtube.com/watch?v=B0vZGTGgIdc&ab_channel=Arslan)
+
+7. FD :
+    - Design SignIn & SignUp Components
