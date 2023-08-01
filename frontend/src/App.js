@@ -6,6 +6,7 @@ import Home from "./components/screens/Home";
 import SignIn from "./components/screens/SignIn";
 import SignUp from "./components/screens/SignUp";
 import Profile from "./components/screens/Profile";
+import CreatePost from "./components/screens/CreatePost";
 
 function App() {
   const router = createBrowserRouter([
@@ -27,6 +28,10 @@ function App() {
         {
           path: "/profile",
           element: <Profile />,
+        },
+        {
+          path: "/create",
+          element: <CreatePost />,
         },
       ],
     },

@@ -37,3 +37,6 @@
 
 9. FD : 
     - Design Home Component
+
+10. FD : 
+    - Design CreatePost Component
