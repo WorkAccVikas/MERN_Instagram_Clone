@@ -1,6 +1,7 @@
 require("dotenv").config({ path: "../backend/.env" });
 
 const express = require("express");
+const cors = require("cors");
 const app = express();
 const morgan = require("morgan");
 const config = require("./config/config");
@@ -51,8 +52,12 @@ const customLoggingFormat =
 
 // POINT : Apply morgan middleware with the custom format
 app.use(morgan(customLoggingFormat));
+
 // POINT : To read req.body data
 app.use(express.json());
+
+// POINT : CORS middleware
+app.use(cors());
 
 // POINT : add auth Route
 app.use(authRoute);

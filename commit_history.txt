@@ -40,3 +40,12 @@
 
 10. FD : 
     - Design CreatePost Component
+
+11. Both : 
+    BD : 
+        - Add cors package
+        - email save in lowercase at /signup route
+    FD : 
+        - Add SignUp Code : Integrate with backend
+        - Add CDN link for materialize JS 
+        - Install materialize package

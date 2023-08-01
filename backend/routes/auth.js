@@ -36,7 +36,7 @@ router.post("/signup", (req, res) => {
         bcrypt.hash(password, 12).then((hashedPassword) => {
           const user = new userModel({
             name,
-            email,
+            email: email.toLowerCase(),
             password: hashedPassword,
           });
 
