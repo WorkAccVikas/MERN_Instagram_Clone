@@ -56,3 +56,14 @@
 
     FD : 
         Add SignIn Code : Integrate with backend 
+
+13. Both : 
+    FD : 
+        - cloudinary
+            - Preset name : instagram_clone
+        - save token and user details in localStorage at SignIn component 
+        - Add CreatePost Code : Integrate with backend
+    
+    BD : 
+        - Change Post Schema 
+        - few changes at /createpost as per pic

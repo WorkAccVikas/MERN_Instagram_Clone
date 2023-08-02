@@ -22,8 +22,8 @@ router.get("/allpost", async (req, res) => {
 // POINT : Create new post
 router.post("/createpost", requireLogin, (req, res) => {
   try {
-    const { title, body } = req.body;
-    if (!title || !body) {
+    const { title, body, pic } = req.body;
+    if (!title || !body || !pic) {
       return res.status(422).json({ error: "Please add all required fields" });
     }
 
@@ -37,6 +37,7 @@ router.post("/createpost", requireLogin, (req, res) => {
     const post = new postModel({
       title,
       body,
+      photo: pic,
       // NOTE : (1)
       //   postedBy: { _id, name, email, createdAt, updatedAt, __v },
       // NOTE : (2)
