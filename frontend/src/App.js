@@ -20,15 +20,32 @@ import { ACTION, initialState, reducer } from "./reducers/userReducer";
 export const UserContext = createContext();
 
 const Routing = () => {
+  return (
+    <Routes>
+      <Route
+        path="/"
+        element={
+          <Layout>
+            <Home />
+          </Layout>
+        }
+      />
+      <Route path="/signin" element={<SignIn />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="/profile" element={<Profile />} />
+      <Route path="/create" element={<CreatePost />} />
+    </Routes>
+  );
+};
+
+const Layout = ({ children }) => {
+  console.count("Layout");
+
   const navigate = useNavigate();
-  const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    console.count("Routing");
-    console.log({ navigate });
-    console.log({ location });
-
+    console.count("useEffect mounting Layout");
     const user = JSON.parse(localStorage.getItem("user"));
 
     if (user) {
@@ -38,15 +55,7 @@ const Routing = () => {
     }
   }, []);
 
-  return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/profile" element={<Profile />} />
-      <Route path="/create" element={<CreatePost />} />
-    </Routes>
-  );
+  return <>{children}</>;
 };
 
 function App() {

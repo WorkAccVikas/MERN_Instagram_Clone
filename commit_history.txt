@@ -84,3 +84,7 @@
     FD : 
         - show allpost on Home.js 
         - Fallback image when image url is invalid in Home.js
+
+17. FD : 
+        - Fix : When Sign In Navbar shown Create Post, Profile, Logout button. Previously , this not shown. (Check App.js)
+        - Few CSS Changes
