@@ -56,6 +56,9 @@ function SignUp() {
           });
           navigate("/signin");
         }
+      })
+      .catch((err) => {
+        console.log(`Error ${err}`);
       });
   };
 

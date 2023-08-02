@@ -91,7 +91,10 @@ router.post("/signin", (req, res) => {
               const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET, {
                 expiresIn: "1d",
               });
-              return res.status(200).json({ token });
+              const {_id,name,email} = savedUser
+              return res
+                .status(200)
+                .json({ token, user: { _id, name, email } });
             }
             // ACTION : If email and password doesn't match
             // return res.status(401).json({ error: "Invalid password" });

@@ -49,3 +49,10 @@
         - Add SignUp Code : Integrate with backend
         - Add CDN link for materialize JS 
         - Install materialize package
+
+12. Both : 
+    BD : 
+        - Change response of /signin route 
+
+    FD : 
+        Add SignIn Code : Integrate with backend 
