@@ -69,7 +69,7 @@ router.post("/signin", (req, res) => {
       return res.status(422).json({ error: "Please enter email or password" });
     }
     userModel
-      .findOne({ email: email })
+      .findOne({ email: email.toLowerCase() })
       .then((savedUser) => {
         // ACTION : If email is not found in db
         if (!savedUser) {
@@ -91,7 +91,7 @@ router.post("/signin", (req, res) => {
               const token = jwt.sign({ _id: savedUser._id }, JWT_SECRET, {
                 expiresIn: "1d",
               });
-              const {_id,name,email} = savedUser
+              const { _id, name, email } = savedUser;
               return res
                 .status(200)
                 .json({ token, user: { _id, name, email } });

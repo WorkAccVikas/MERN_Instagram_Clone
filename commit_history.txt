@@ -77,3 +77,10 @@
         - Navbar.js : 
             - When token is present in localStorage user see only two routes /profile and /create
             - When token is absent in localStorage user see only two routes /signin and /signup
+
+16. Both : 
+    BD : 
+        - /allpost changes to protected route (means need to login to use this resource)
+    FD : 
+        - show allpost on Home.js 
+        - Fallback image when image url is invalid in Home.js

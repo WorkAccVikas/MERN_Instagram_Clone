@@ -1,63 +1,55 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { UserContext } from "../../App";
+import fallBackImage from "../../assets/No_Image_Available.jpg";
 
 function Home() {
   console.count("Home");
+  const [data, setData] = useState([]);
+  const { state, dispatch } = useContext(UserContext);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/allpost", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        setData(result.posts);
+      })
+      .catch((err) => {
+        console.log("Error while fetching all posts = ", err);
+      });
+  }, []);
+
+  const handleImageError = (event) => {
+    event.target.src = fallBackImage;
+    // https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930
+  };
 
   return (
     <div className="home">
-      <div className="card home-card">
-        <h5>Vikas</h5>
-        <div className="card-image">
-          <img
-            src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHdhbGxwYXBlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            alt="card__image"
-          />
+      {data?.map((post) => (
+        <div key={post._id} className="card home-card">
+          <h5>{post.postedBy.name}</h5>
+          <div className="card-image">
+            {/* LEARN : How to set fallback image when image url in db is invalid  */}
+            <img
+              src={post.photo}
+              alt="card__image"
+              onError={handleImageError}
+            />
+          </div>
+          <div className="card-content">
+            <i className="material-icons" style={{ color: "red" }}>
+              favorite
+            </i>
+            <h6>{post.title}</h6>
+            <p>{post.body}</p>
+            <input type="text" placeholder="add a comment" />
+          </div>
         </div>
-        <div className="card-content">
-          <i className="material-icons" style={{ color: "red" }}>
-            favorite
-          </i>
-          <h6>title</h6>
-          <p>This is amazing post</p>
-          <input type="text" placeholder="add a comment" />
-        </div>
-      </div>
-
-      <div className="card home-card">
-        <h5>Vikas</h5>
-        <div className="card-image">
-          <img
-            src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHdhbGxwYXBlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            alt="card__image"
-          />
-        </div>
-        <div className="card-content">
-          <i className="material-icons" style={{ color: "red" }}>
-            favorite
-          </i>
-          <h6>title</h6>
-          <p>This is amazing post</p>
-          <input type="text" placeholder="add a comment" />
-        </div>
-      </div>
-
-      <div className="card home-card">
-        <h5>Vikas</h5>
-        <div className="card-image">
-          <img
-            src="https://images.unsplash.com/photo-1493246507139-91e8fad9978e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fHdhbGxwYXBlcnxlbnwwfHwwfHx8MA%3D%3D&auto=format&fit=crop&w=500&q=60"
-            alt="card__image"
-          />
-        </div>
-        <div className="card-content">
-          <i className="material-icons" style={{ color: "red" }}>
-            favorite
-          </i>
-          <h6>title</h6>
-          <p>This is amazing post</p>
-          <input type="text" placeholder="add a comment" />
-        </div>
-      </div>
+      ))}
     </div>
   );
 }

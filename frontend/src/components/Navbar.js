@@ -27,7 +27,7 @@ function Navbar() {
       ];
     }
   };
-  
+
   return (
     <>
       <nav>

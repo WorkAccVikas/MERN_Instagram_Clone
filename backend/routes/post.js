@@ -5,15 +5,15 @@ const postModel = require("../model/Post");
 const requireLogin = require("../middlewares/requireLogin");
 
 // POINT : For finding all posts of all users
-router.get("/allpost", async (req, res) => {
+router.get("/allpost", requireLogin, async (req, res) => {
   try {
     /* ACTION : Find all posts and populate postedBy field and 
     show only _id, name and then sort by latest post created by using createdAt */
-    const post = await postModel
+    const posts = await postModel
       .find({})
       .populate("postedBy", "_id name")
       .sort("-createdAt");
-    return res.status(200).json({ post, totalCount: post.length });
+    return res.status(200).json({ posts, totalCount: posts.length });
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }
