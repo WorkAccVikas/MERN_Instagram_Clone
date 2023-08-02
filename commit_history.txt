@@ -72,3 +72,8 @@
         - Change Routing style in App.js 
         - Add context and Context API 
         - Protected page only access when jwt token stored in localStorage otherwise it will redirect to SignIn page.
+
+15. FD : 
+        - Navbar.js : 
+            - When token is present in localStorage user see only two routes /profile and /create
+            - When token is absent in localStorage user see only two routes /signin and /signup
