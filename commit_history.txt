@@ -67,3 +67,8 @@
     BD : 
         - Change Post Schema 
         - few changes at /createpost as per pic
+
+14. FD : 
+        - Change Routing style in App.js 
+        - Add context and Context API 
+        - Protected page only access when jwt token stored in localStorage otherwise it will redirect to SignIn page.
