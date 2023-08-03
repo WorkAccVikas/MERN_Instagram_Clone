@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../App";
 import fallBackImage from "../../assets/No_Image_Available.jpg";
 
@@ -77,6 +77,31 @@ function Home() {
       });
   };
 
+  const makeComment = (text, postId) => {
+    fetch("http://localhost:5000/comment", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({ postId, text }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const newData = data.map((item) => {
+          if (item._id === result._id) {
+            return result;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log("Error while comment = ", err);
+      });
+  };
+
   return (
     <div className="home">
       {data?.map((post) => (
@@ -113,7 +138,24 @@ function Home() {
             </h6>
             <h6>{post.title}</h6>
             <p>{post.body}</p>
-            <input type="text" placeholder="add a comment" />
+            {post?.comments.map((eachComment) => (
+              <h6 key={eachComment._id}>
+                <span style={{ fontWeight: "500" }}>
+                  {eachComment.postedBy.name}
+                </span>{" "}
+                : {eachComment.text}
+              </h6>
+            ))}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log(e.target[0].value);
+                makeComment(e.target[0].value, post._id);
+                e.target[0].value = "";
+              }}
+            >
+              <input type="text" placeholder="add a comment" />
+            </form>
           </div>
         </div>
       ))}

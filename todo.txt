@@ -1,1 +1,5 @@
 - backend server connection lost so show popup on UI
+
+- /allpost : 
+    - first sort latest post by using createdAt (already present)
+    - second for each post comment need to sorted latest first

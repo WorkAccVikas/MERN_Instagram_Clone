@@ -12,6 +12,7 @@ router.get("/allpost", requireLogin, async (req, res) => {
     const posts = await postModel
       .find({})
       .populate("postedBy", "_id name")
+      .populate("comments.postedBy", "_id name")
       .sort("-createdAt");
     return res.status(200).json({ posts, totalCount: posts.length });
   } catch (error) {
@@ -136,6 +137,7 @@ router.put("/comment", requireLogin, (req, res) => {
         { new: true }
       )
       .populate("comments.postedBy", "_id name")
+      .populate("postedBy", "_id name")
       .then((result) => {
         return res.status(200).json(result);
       })

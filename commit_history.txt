@@ -106,3 +106,9 @@
         - add new route 
             - /comment
 
+22. Both : 
+    BD : 
+        - few changes at /allpost and /comment
+    
+    FD :
+        - Home.js : Integrate add comment feature
