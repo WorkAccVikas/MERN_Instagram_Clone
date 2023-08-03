@@ -1,9 +1,10 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useMemo } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import { ACTION } from "../reducers/userReducer";
 
-const set = new Set();
+// const set = new Set();
+// const set1 = new Set();
 
 function Navbar() {
   console.count("Navbar");
@@ -48,7 +49,8 @@ function Navbar() {
 
   // SOLUTION : Optimize : when state change the function is created otherwise not created
 
-  const renderList = useCallback(() => {
+  const renderList = useMemo(() => {
+    console.count("renderList");
     if (state) {
       return [
         <li key="1">
@@ -82,17 +84,22 @@ function Navbar() {
     }
   }, [state]);
 
-  set.add(renderList);
-  console.log({ set });
+  // set.add(renderList);
+  // console.log({ set });
+
+  // set1.add(state);
+  // console.log({ set1 });
+
   return (
     <>
       <nav>
         <div className="nav-wrapper white">
-          <Link to={state ? "/" : "/signin"} className="brand-logo left">
+          <Link to={"/"} className="brand-logo left">
             Instagram
           </Link>
           <ul id="nav-mobile" className="right">
-            {renderList()}
+            {/* {renderList()} */}
+            {renderList}
           </ul>
         </div>
       </nav>

@@ -88,3 +88,6 @@
 17. FD : 
         - Fix : When Sign In Navbar shown Create Post, Profile, Logout button. Previously , this not shown. (Check App.js)
         - Few CSS Changes
+
+18. FD : 
+        - Profile.js : Integrate with backend show mypost and Profile name

@@ -20,6 +20,7 @@ import { ACTION, initialState, reducer } from "./reducers/userReducer";
 export const UserContext = createContext();
 
 const Routing = () => {
+  console.count("Routing");
   return (
     <Routes>
       <Route
@@ -32,7 +33,14 @@ const Routing = () => {
       />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" element={<SignUp />} />
-      <Route path="/profile" element={<Profile />} />
+      <Route
+        path="/profile"
+        element={
+          <Layout>
+            <Profile />
+          </Layout>
+        }
+      />
       <Route path="/create" element={<CreatePost />} />
     </Routes>
   );
