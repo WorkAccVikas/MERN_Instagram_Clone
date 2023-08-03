@@ -75,4 +75,49 @@ router.get("/mypost", requireLogin, async (req, res) => {
   }
 });
 
+// POINT : Like post
+router.put("/like", requireLogin, (req, res) => {
+  try {
+    postModel
+      .findByIdAndUpdate(
+        req.body.postId,
+        {
+          $push: { likes: req.user._id },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        return res.status(200).json({ result });
+      })
+      .catch((err) => {
+        console.log("Error while like post = ", err);
+      });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// POINT : Unlike post
+router.put("/unlike", requireLogin, (req, res) => {
+  try {
+    postModel
+      .findByIdAndUpdate(
+        req.body.postId,
+        {
+          // LEARN : How to pull specific value from array in mongodb
+          $pull: { likes: req.user._id },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        return res.status(200).json({ result });
+      })
+      .catch((err) => {
+        console.log("Error while unlike post = ", err);
+      });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

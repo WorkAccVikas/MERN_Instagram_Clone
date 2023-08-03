@@ -91,3 +91,9 @@
 
 18. FD : 
         - Profile.js : Integrate with backend show mypost and Profile name
+
+19. BD : 
+        - add likes field in Post schema 
+        - add 2 new routes 
+            - /like
+            - /unlike

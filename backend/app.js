@@ -13,7 +13,8 @@ const mongoConnection = require("./connection/mongo_connection");
 const userModel = require("./model/User");
 
 const PORT = process.env.PORT || 8000;
-const environment = process.env.NODE_ENV?.toLowerCase() || "development";
+// const environment = process.env.NODE_ENV?.toLowerCase() || "development";
+const environment = process.env.NODE_ENV?.toLowerCase() || "production";
 const mongoUrl = config.MONGOURI;
 
 // POINT : MONGODB CONNECTION
