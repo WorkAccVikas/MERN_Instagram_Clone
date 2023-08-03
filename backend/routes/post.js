@@ -87,7 +87,7 @@ router.put("/like", requireLogin, (req, res) => {
         { new: true }
       )
       .then((result) => {
-        return res.status(200).json({ result });
+        return res.status(200).json(result);
       })
       .catch((err) => {
         console.log("Error while like post = ", err);
@@ -110,7 +110,7 @@ router.put("/unlike", requireLogin, (req, res) => {
         { new: true }
       )
       .then((result) => {
-        return res.status(200).json({ result });
+        return res.status(200).json(result);
       })
       .catch((err) => {
         console.log("Error while unlike post = ", err);

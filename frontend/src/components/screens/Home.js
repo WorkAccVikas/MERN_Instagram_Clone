@@ -27,6 +27,56 @@ function Home() {
     // https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930
   };
 
+  const likePost = (id) => {
+    fetch("http://localhost:5000/like", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({ postId: id }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const newData = data.map((item) => {
+          if (item._id === result._id) {
+            return result;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log("Error while like post = ", err);
+      });
+  };
+
+  const unlikePost = (id) => {
+    fetch("http://localhost:5000/unlike", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({ postId: id }),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const newData = data.map((item) => {
+          if (item._id === result._id) {
+            return result;
+          } else {
+            return item;
+          }
+        });
+        setData(newData);
+      })
+      .catch((err) => {
+        console.log("Error while unlike post = ", err);
+      });
+  };
+
   return (
     <div className="home">
       {data?.map((post) => (
@@ -44,6 +94,23 @@ function Home() {
             <i className="material-icons" style={{ color: "red" }}>
               favorite
             </i>
+            {/* ACTION : If user already like it then it show thumb down otherwise thumb up */}
+            {post.likes.includes(state._id) ? (
+              <i
+                className="material-icons"
+                onClick={() => unlikePost(post._id)}
+              >
+                thumb_down
+              </i>
+            ) : (
+              <i className="material-icons" onClick={() => likePost(post._id)}>
+                thumb_up
+              </i>
+            )}
+
+            <h6>
+              {post.likes.length} {post.likes.length > 1 ? "likes" : "like"}
+            </h6>
             <h6>{post.title}</h6>
             <p>{post.body}</p>
             <input type="text" placeholder="add a comment" />
