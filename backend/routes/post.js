@@ -120,4 +120,31 @@ router.put("/unlike", requireLogin, (req, res) => {
   }
 });
 
+// POINT : Comment post
+router.put("/comment", requireLogin, (req, res) => {
+  try {
+    const comment = {
+      text: req.body.text,
+      postedBy: req.user._id,
+    };
+    postModel
+      .findByIdAndUpdate(
+        req.body.postId,
+        {
+          $push: { comments: comment },
+        },
+        { new: true }
+      )
+      .populate("comments.postedBy", "_id name")
+      .then((result) => {
+        return res.status(200).json(result);
+      })
+      .catch((err) => {
+        console.log("Error while like post = ", err);
+      });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

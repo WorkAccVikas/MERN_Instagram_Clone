@@ -92,7 +92,7 @@
 18. FD : 
         - Profile.js : Integrate with backend show mypost and Profile name
 
-19. BD : 
+19. BD : (Wrong commit message)
         - add likes field in Post schema 
         - add 2 new routes 
             - /like
@@ -100,3 +100,9 @@
 
 20. FD : 
         - Home.js : Integrate like and unlike post feature.
+
+21. BD : 
+        - add comments field in Post Schema 
+        - add new route 
+            - /comment
+
