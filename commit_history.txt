@@ -131,3 +131,10 @@
     FD : 
         - add new component UserProfile
         - Integrate with backend in UserProfile Component.
+
+26. BD : 
+        - add followers and following field in User Schema 
+        - routes/user.js
+            - add 2 new routes 
+                - /follow
+                - /unfollow

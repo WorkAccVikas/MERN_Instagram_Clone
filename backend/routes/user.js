@@ -32,4 +32,84 @@ router.get("/user/:id", requireLogin, (req, res) => {
   }
 });
 
+// POINT : follow user
+router.put("/follow", requireLogin, (req, res) => {
+  try {
+    /**ACTION : Let assume, User A login and he/she will follow User B then two operation
+     * - (1) : User B add _id of User A in followers
+     * - (2) : User A add _id of User B in following
+     */
+    userModel
+      .findByIdAndUpdate(
+        req.body.followId,
+        {
+          $push: { followers: req.user._id },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        console.log(`🚀 ~ file: user.js:51 ~ .then ~ result:`, result);
+        userModel
+          .findByIdAndUpdate(
+            req.user._id,
+            {
+              $push: { following: req.body.followId },
+            },
+            { new: true }
+          )
+          .then((result1) => {
+            console.log(`🚀 ~ file: user.js:61 ~ .then ~ result1:`, result1);
+            return res.status(201).json(result1);
+          })
+          .catch((err) => {
+            return res.status(422).json({ error: err.message });
+          });
+      })
+      .catch((err) => {
+        return res.status(422).json({ error: err.message });
+      });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// POINT : unfollow user
+router.put("/unfollow", requireLogin, (req, res) => {
+  try {
+    /**ACTION : Let assume, User A login and he/she will follow User B then two operation
+     * - (1) : User B add _id of User A in followers
+     * - (2) : User A add _id of User B in following
+     */
+    userModel
+      .findByIdAndUpdate(
+        req.body.followId,
+        {
+          $pull: { followers: req.user._id },
+        },
+        { new: true }
+      )
+      .then((result) => {
+        userModel
+          .findByIdAndUpdate(
+            req.user._id,
+            {
+              $pull: { following: req.body.followId },
+            },
+            { new: true }
+          )
+          .then((result1) => {
+            return res.status(201).json(result1);
+          })
+          .catch((err) => {
+            return res.status(422).json({ error: err.message });
+          });
+      })
+      .catch((err) => {
+        return res.status(422).json({ error: err.message });
+      });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;
