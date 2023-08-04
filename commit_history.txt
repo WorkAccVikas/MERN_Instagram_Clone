@@ -112,3 +112,11 @@
     
     FD :
         - Home.js : Integrate add comment feature
+
+23. Both : 
+    BD :
+        - create new route /deletepost/:postId for delete post
+    
+    FD : 
+        - Home.js 
+        - Feature delete post button only visible on post that own the post. Integrate with backend

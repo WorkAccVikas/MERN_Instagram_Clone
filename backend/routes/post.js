@@ -131,8 +131,14 @@ router.put("/comment", requireLogin, (req, res) => {
     postModel
       .findByIdAndUpdate(
         req.body.postId,
+        // LEARN : How to add element or document at begin of array
         {
-          $push: { comments: comment },
+          $push: {
+            comments: {
+              $each: [comment],
+              $position: 0, // Add the comment to the beginning of the array
+            },
+          },
         },
         { new: true }
       )
@@ -143,6 +149,55 @@ router.put("/comment", requireLogin, (req, res) => {
       })
       .catch((err) => {
         console.log("Error while like post = ", err);
+        return res.status(422).json({ error: err });
+      });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// POINT : Delete post of particular user
+/** LEARN : How to delete single record by using _id but that particular record belong to that particular user
+ * - if yes then delete that record
+ * - otherwise show message : "Unable to access this resource"
+ */
+router.delete("/deletepost/:postId", requireLogin, (req, res) => {
+  try {
+    postModel
+      .findOne({ _id: req.params.postId })
+      .populate("postedBy", "_id")
+      .then((data) => {
+        console.log({ data });
+        console.log(typeof data.postedBy._id); // * : object type
+        if (data.postedBy._id.toString() === req.user._id.toString()) {
+          // ACTION : OWNER of this post
+          console.log("Owner");
+          postModel
+            .deleteOne({ _id: req.params.postId })
+            .then((result) => {
+              console.log({ result });
+              return res
+                .status(200)
+                .json({
+                  message: "Post deleted successfully",
+                  _id: data._id,
+                });
+            })
+            .catch((err) => {
+              console.log(err);
+              return res.status(500).json({ err: "Internal Error" });
+            });
+        } else {
+          // ACTION : Unauthorized user try to delete post
+          console.log("hacker");
+          return res
+            .status(401)
+            .json({ message: "Unable to access this resource" });
+        }
+      })
+      .catch((err) => {
+        // console.log(err);
+        return res.status(422).json({ err: err.message });
       });
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });

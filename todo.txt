@@ -3,3 +3,5 @@
 - /allpost : 
     - first sort latest post by using createdAt (already present)
     - second for each post comment need to sorted latest first
+
+- delete comment same functionality as delete post

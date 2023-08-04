@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../App";
 import fallBackImage from "../../assets/No_Image_Available.jpg";
+import M from "materialize-css";
 
 function Home() {
   console.count("Home");
@@ -102,11 +103,43 @@ function Home() {
       });
   };
 
+  const deletePost = (postId) => {
+    fetch(`http://localhost:5000/deletepost/${postId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        const newData = data.filter((item) => {
+          return item._id !== result._id;
+        });
+        setData(newData);
+        M.toast({
+          html: "Post deleted successfully",
+          classes: "#c62828 red darken-3",
+        });
+      });
+  };
+
   return (
     <div className="home">
       {data?.map((post) => (
         <div key={post._id} className="card home-card">
-          <h5>{post.postedBy.name}</h5>
+          <h5>
+            {post.postedBy.name}
+            {post.postedBy._id === state._id && (
+              <i
+                className="material-icons"
+                style={{ float: "right", cursor: "pointer" }}
+                onClick={() => deletePost(post._id)}
+              >
+                delete
+              </i>
+            )}
+          </h5>
           <div className="card-image">
             {/* LEARN : How to set fallback image when image url in db is invalid  */}
             <img
@@ -143,7 +176,20 @@ function Home() {
                 <span style={{ fontWeight: "500" }}>
                   {eachComment.postedBy.name}
                 </span>{" "}
-                : {eachComment.text}
+                : {eachComment.text}{" "}
+                {/* <small style={{ color: "grey" }}>{eachComment.createdAt}</small> */}
+                {/* TOPIC : Change format of date */}
+                {/* <small style={{ color: "grey", fontSize: "60%" }}>
+                  {new Intl.DateTimeFormat("en-US", {
+                    year: "numeric",
+                    month: "long",
+                    day: "numeric",
+                    hour: "numeric",
+                    minute: "numeric",
+                    second: "numeric",
+                    hour12: true,
+                  }).format(new Date(eachComment.createdAt))}
+                </small> */}
               </h6>
             ))}
             <form

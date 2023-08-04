@@ -21,13 +21,29 @@ const PostSchema = new mongoose.Schema(
         ref: "User",
       },
     ],
+    // comments: [
+    //   {
+    //     text: String,
+    //     postedBy: {
+    //       type: ObjectId,
+    //       ref: "User",
+    //     },
+    //   },
+    // ],
+
+    // LEARN : How to set timestamp in sub-documents
     comments: [
       {
-        text: String,
-        postedBy: {
-          type: ObjectId,
-          ref: "User",
-        },
+        type: new mongoose.Schema(
+          {
+            text: String,
+            postedBy: {
+              type: ObjectId,
+              ref: "User",
+            },
+          },
+          { timestamps: true }
+        ),
       },
     ],
     postedBy: {
