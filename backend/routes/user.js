@@ -13,7 +13,7 @@ router.get("/user/:id", requireLogin, (req, res) => {
       .findOne({ _id: req.params.id })
       .select("-password -_id")
       .then((user) => {
-        console.log({ user });
+        // console.log({ user });
         if (!user) {
           return res.status(404).json({ message: "User not found" });
         }
@@ -48,17 +48,17 @@ router.put("/follow", requireLogin, (req, res) => {
         { new: true }
       )
       .then((result) => {
-        console.log(`🚀 ~ file: user.js:51 ~ .then ~ result:`, result);
+        // console.log(`🚀 ~ file: user.js:51 ~ .then ~ result:`, result);
         userModel
           .findByIdAndUpdate(
             req.user._id,
             {
               $push: { following: req.body.followId },
             },
-            { new: true }
+            { new: true, projection: { password: 0 } }
           )
           .then((result1) => {
-            console.log(`🚀 ~ file: user.js:61 ~ .then ~ result1:`, result1);
+            // console.log(`🚀 ~ file: user.js:61 ~ .then ~ result1:`, result1);
             return res.status(201).json(result1);
           })
           .catch((err) => {
@@ -82,18 +82,18 @@ router.put("/unfollow", requireLogin, (req, res) => {
      */
     userModel
       .findByIdAndUpdate(
-        req.body.followId,
+        req.body.unfollowId,
         {
           $pull: { followers: req.user._id },
         },
-        { new: true }
+        { new: true, projection: { password: 0 } }
       )
       .then((result) => {
         userModel
           .findByIdAndUpdate(
             req.user._id,
             {
-              $pull: { following: req.body.followId },
+              $pull: { following: req.body.unfollowId },
             },
             { new: true }
           )

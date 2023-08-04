@@ -138,3 +138,17 @@
             - add 2 new routes 
                 - /follow
                 - /unfollow
+
+27. Both : 
+    BD : 
+        - remove password field from response at routes /follow and /unfollow
+        - change minor change in response of /signin
+
+    FD : 
+        - UserProfile.js 
+            - show follow or unfollow button 
+            - Integrate with backend /follow and /unfollow
+            - update the localStorage 
+            - update the state with new field added followers, following
+            - show followers, following in Profile.js 
+            - If user follow User A then even if page reload unfollow button is still show (Explanation : UserProfile.js)

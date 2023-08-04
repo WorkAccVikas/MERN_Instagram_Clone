@@ -2,16 +2,41 @@ import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
 import fallBackImage from "../../assets/No_Image_Available.jpg";
 import { useParams } from "react-router-dom";
+import { ACTION } from "../../reducers/userReducer";
 
 function UserProfile() {
-  console.count("Profile");
+  console.count("UserProfile");
   const { state, dispatch } = useContext(UserContext);
+  console.log("state = ", state);
+
   const [mypics, setMyPics] = useState([]);
   const [userProfile, setProfile] = useState(null);
   const { userid } = useParams();
-  console.log(userid);
+  /** PROBLEM : When page reload manually state is null so showfollow is always true
+   * if i follow User A it will show unfollow button when we back page using back button
+   * it still show unfollow button but when page it always show follow button only.
+   */
+  // const [showfollow, setShowFollow] = useState(
+  //   state ? !state?.following?.includes(userid) : true
+  // );
+
+  /** SOLUTION : Using localStorage */
+  const [showfollow, setShowFollow] = useState(() => {
+    const storedState = localStorage.getItem("user");
+    const parsedData = JSON.parse(storedState);
+    const present = parsedData.following.includes(userid);
+    return storedState ? !present : true;
+  });
+
+  // const [showfollow, setShowFollow] = useState(true);
+
+  console.log("Ahe ka ? => ", state?.following?.includes(userid));
+  console.log(userid, typeof userid);
+  console.log("Vikas = ", showfollow);
+  console.log("ram = ", state !== null);
 
   useEffect(() => {
+    console.count("UserProfile useEffect run");
     fetch(`http://localhost:5000/user/${userid}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -27,6 +52,79 @@ function UserProfile() {
   const handleImageError = (event) => {
     event.target.src = fallBackImage;
     // https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930
+  };
+
+  const followUser = () => {
+    fetch("http://localhost:5000/follow", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        followId: userid,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        // console.log(data);
+        dispatch({
+          type: ACTION.UPDATE,
+          payload: { following: data.following, followers: data.followers },
+        });
+        localStorage.setItem("user", JSON.stringify(data));
+        setProfile((prevState) => {
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: [...prevState.user.followers, data._id],
+            },
+          };
+        });
+        setShowFollow(false);
+      })
+      .catch((err) => {
+        console.log("Error while follow user");
+      });
+  };
+
+  const unfollowUser = () => {
+    fetch("http://localhost:5000/unfollow", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + localStorage.getItem("jwt"),
+      },
+      body: JSON.stringify({
+        unfollowId: userid,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        dispatch({
+          type: ACTION.UPDATE,
+          payload: { following: data.following, followers: data.followers },
+        });
+        localStorage.setItem("user", JSON.stringify(data));
+        setProfile((prevState) => {
+          const newFollower = prevState.user.followers.filter(
+            (item) => item !== data._id
+          );
+          return {
+            ...prevState,
+            user: {
+              ...prevState.user,
+              followers: newFollower,
+            },
+          };
+        });
+        setShowFollow(true);
+      })
+      .catch((err) => {
+        console.log("Error while follow user");
+      });
   };
 
   return (
@@ -63,9 +161,34 @@ function UserProfile() {
                 }}
               >
                 <h5>{userProfile.posts.length} posts</h5>
-                <h5>40 followers</h5>
-                <h5>40 following</h5>
+                <h5>{userProfile.user.followers.length} followers</h5>
+                <h5>{userProfile.user.following.length} following</h5>
               </div>
+              {showfollow && state !== null
+                ? console.count("Yes")
+                : console.count("No")}
+
+              {showfollow && state !== null ? (
+                <button
+                  style={{
+                    margin: "10px",
+                  }}
+                  className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                  onClick={() => followUser()}
+                >
+                  Follow
+                </button>
+              ) : (
+                <button
+                  style={{
+                    margin: "10px",
+                  }}
+                  className="btn waves-effect waves-light #64b5f6 blue darken-1"
+                  onClick={() => unfollowUser()}
+                >
+                  UnFollow
+                </button>
+              )}
             </div>
           </div>
 

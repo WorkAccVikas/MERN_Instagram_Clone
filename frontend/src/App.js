@@ -65,6 +65,8 @@ const Layout = ({ children }) => {
     console.count("useEffect mounting Layout");
     const user = JSON.parse(localStorage.getItem("user"));
 
+    console.log("user = ", user);
+
     if (user) {
       dispatch({ type: ACTION.USER, payload: user });
     } else {

@@ -1,14 +1,14 @@
 import React, { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../App";
-import fallBackImage from '../../assets/No_Image_Available.jpg'
+import fallBackImage from "../../assets/No_Image_Available.jpg";
 
 function Profile() {
   console.count("Profile");
+
   const { state, dispatch } = useContext(UserContext);
+  console.log("state = ", state);
   const [mypics, setMyPics] = useState([]);
   const [image, setImage] = useState("");
-
-  console.log(state);
 
   useEffect(() => {
     fetch("http://localhost:5000/mypost", {
@@ -53,9 +53,11 @@ function Profile() {
               width: "108%",
             }}
           >
-            <h5>40 posts</h5>
-            <h5>40 followers</h5>
-            <h5>40 following</h5>
+            <h5>{mypics.length} posts</h5>
+            <h5>{state?.followers?.length}followers</h5>
+            <h5>{state?.following?.length} following</h5>
+            {/* <h5>40 followers</h5>
+            <h5>40 following</h5> */}
           </div>
         </div>
       </div>

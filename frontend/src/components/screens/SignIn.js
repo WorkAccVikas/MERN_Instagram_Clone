@@ -18,7 +18,7 @@ function SignIn() {
     }
 
     fetch("http://localhost:5000/signin", {
-      method: "post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
