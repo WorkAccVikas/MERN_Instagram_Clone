@@ -123,3 +123,11 @@
 
 24. BD : 
         - add new route /user/:id for getting user details along with its post details
+
+25. Both : 
+    BD : 
+        - add middleware to /user/:id route 
+
+    FD : 
+        - add new component UserProfile
+        - Integrate with backend in UserProfile Component.

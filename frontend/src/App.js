@@ -13,6 +13,7 @@ import SignIn from "./components/screens/SignIn";
 import SignUp from "./components/screens/SignUp";
 import Profile from "./components/screens/Profile";
 import CreatePost from "./components/screens/CreatePost";
+import UserProfile from "./components/screens/UserProfile";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { ACTION, initialState, reducer } from "./reducers/userReducer";
 
@@ -42,6 +43,14 @@ const Routing = () => {
         }
       />
       <Route path="/create" element={<CreatePost />} />
+      <Route
+        path="/profile/:userid"
+        element={
+          <Layout>
+            <UserProfile />
+          </Layout>
+        }
+      />
     </Routes>
   );
 };

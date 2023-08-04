@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../App";
 import fallBackImage from "../../assets/No_Image_Available.jpg";
 import M from "materialize-css";
+import { Link } from "react-router-dom";
 
 function Home() {
   console.count("Home");
@@ -129,7 +130,19 @@ function Home() {
       {data?.map((post) => (
         <div key={post._id} className="card home-card">
           <h5>
-            {post.postedBy.name}
+          
+            {/* ACTION : If user A login and when he click on other username on post 
+                        then it will redirect to /profile/userid and if click on his how
+                        post then it will redirect to /profile  */}
+            <Link
+              to={
+                post.postedBy._id !== state._id
+                  ? `/profile/${post.postedBy._id}`
+                  : "/profile"
+              }
+            >
+              {post.postedBy.name}
+            </Link>
             {post.postedBy._id === state._id && (
               <i
                 className="material-icons"

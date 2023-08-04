@@ -6,9 +6,9 @@ const postModel = require("../model/Post");
 const requireLogin = require("../middlewares/requireLogin");
 
 // POINT : Get User Details along with post belong to user
-router.get("/user/:id", (req, res) => {
+router.get("/user/:id", requireLogin, (req, res) => {
   try {
-    // TOPIC  : Alternative solution using aggregate see MongoDB - Case Study - Case Study 2 
+    // TOPIC  : Alternative solution using aggregate see MongoDB - Case Study - Case Study 2
     userModel
       .findOne({ _id: req.params.id })
       .select("-password -_id")
