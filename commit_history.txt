@@ -120,3 +120,6 @@
     FD : 
         - Home.js 
         - Feature delete post button only visible on post that own the post. Integrate with backend
+
+24. BD : 
+        - add new route /user/:id for getting user details along with its post details
