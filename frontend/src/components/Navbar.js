@@ -59,6 +59,10 @@ function Navbar() {
         <li key="2">
           <Link to="/create">Create Post</Link>
         </li>,
+        <li key="4">
+          <Link to="/myfollowingpost">My following Posts</Link>
+        </li>,
+
         <li key="5">
           <button
             className="btn #c62828 red darken-3"

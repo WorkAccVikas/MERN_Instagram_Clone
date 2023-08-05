@@ -4,13 +4,13 @@ import fallBackImage from "../../assets/No_Image_Available.jpg";
 import M from "materialize-css";
 import { Link } from "react-router-dom";
 
-function Home() {
+function SubscribesUserPosts() {
   console.count("Home");
   const [data, setData] = useState([]);
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:5000/allpost", {
+    fetch("http://localhost:5000/allsubpost", {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -221,4 +221,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default SubscribesUserPosts;

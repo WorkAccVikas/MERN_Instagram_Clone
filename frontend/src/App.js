@@ -16,6 +16,7 @@ import CreatePost from "./components/screens/CreatePost";
 import UserProfile from "./components/screens/UserProfile";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { ACTION, initialState, reducer } from "./reducers/userReducer";
+import SubscribesUserPosts from "./components/screens/SubscribesUserPosts";
 
 // POINT : Create Context
 export const UserContext = createContext();
@@ -48,6 +49,14 @@ const Routing = () => {
         element={
           <Layout>
             <UserProfile />
+          </Layout>
+        }
+      />
+      <Route
+        path="/myfollowingpost"
+        element={
+          <Layout>
+            <SubscribesUserPosts />
           </Layout>
         }
       />

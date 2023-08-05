@@ -155,3 +155,8 @@
 
 28. BD : 
         - create a route /allsubpost : for get all posts of followed user by him/her.
+
+29. FD : 
+        - create new component SubscribesUserPosts : for show all post who he/she follow 
+        - SubscribesUserPosts : Integrate with backend /allsubpost
+        - few css changes 
