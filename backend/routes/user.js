@@ -112,4 +112,24 @@ router.put("/unfollow", requireLogin, (req, res) => {
   }
 });
 
+// POINT : update user profile picture
+router.put("/updatepic", requireLogin, (req, res) => {
+  try {
+    userModel
+      .findByIdAndUpdate(
+        req.user._id,
+        { $set: { profile_pic: req.body.pic } },
+        { new: true }
+      )
+      .then((result) => {
+        return res.status(200).json(result);
+      })
+      .catch((err) => {
+        return res.status(422).json({ error: "pic cannot update" });
+      });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

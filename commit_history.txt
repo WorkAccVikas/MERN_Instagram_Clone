@@ -165,9 +165,10 @@
     FD : 
         - add user profile feature
             - add upload pic in SignUp.js 
-            - minor chanage at following components : 
+            - minor change at following components : 
                 - Profile 
                 - UserProfile
+            - css changes at Profile.js         
 
     BD : 
         - add user profile feature
@@ -175,3 +176,13 @@
             - changes at routes : 
                 - /signup
                 - /signin
+
+31. Both : 
+    FD : 
+        - update user profile feature 
+            - update profile pic in Profile.js
+            - Integrate with backend /updatepic
+
+    BD :
+         - update user profile feature 
+            - add /updatepic route : for update profile pic of user

@@ -67,3 +67,36 @@ h2 {
 .material-icons:hover {
   cursor: pointer;
 }
+
+#get_file {
+  background: #f9f9f9;
+  border: 5px solid #88c;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 10px;
+  cursor: pointer;
+}
+
+.custom-div {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.hidden-span {
+  color: white;
+  letter-spacing: 5px;
+  font-size: 1rem;
+  display: none;
+  position: absolute;
+  font-weight: 900;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.custom-div:hover .hidden-span {
+  display: block;
+}

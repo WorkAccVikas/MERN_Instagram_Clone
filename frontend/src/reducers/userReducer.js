@@ -4,6 +4,7 @@ export const ACTION = {
   USER: "USER",
   CLEAR: "CLEAR",
   UPDATE: "UPDATE",
+  UPDATE_PIC: "UPDATE_PIC",
 };
 
 // POINT : Reducer Function
@@ -18,6 +19,11 @@ export const reducer = (state, action) => {
         ...state,
         followers: action.payload.followers,
         following: action.payload.following,
+      };
+    case ACTION.UPDATE_PIC:
+      return {
+        ...state,
+        profile_pic: action.payload,
       };
 
     default:
