@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import M from "materialize-css";
 
@@ -8,10 +8,44 @@ function SignUp() {
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
-  // const [image, setImage] = useState("");
+  const [image, setImage] = useState("");
+  const [url, setUrl] = useState(undefined);
   const navigate = useNavigate();
 
-  const PostData = () => {
+  useEffect(() => {
+    if (url) {
+      uploadFields();
+    }
+  }, [url]);
+
+  const uploadPic = () => {
+    const data = new FormData();
+    data.append("file", image);
+    data.append("upload_preset", "instagram_clone");
+    data.append("cloud_name", "dbxgos2wd");
+
+    fetch("https://api.cloudinary.com/v1_1/dbxgos2wd/image/upload", {
+      method: "POST",
+      body: data,
+    })
+      .then((res) => {
+        if (res.status === 400) {
+          M.toast({
+            html: "Please Upload Image",
+            classes: "#c62828 red darken-3",
+          });
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setUrl(data.url);
+      })
+      .catch((err) => {
+        console.log("Error while uploading image = ", err);
+      });
+  };
+
+  const uploadFields = () => {
     // ACTION : Check email pattern
     const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (!emailPattern.test(email)) {
@@ -43,6 +77,7 @@ function SignUp() {
         name,
         email,
         password,
+        pic: url,
       }),
     })
       .then((res) => res.json())
@@ -60,6 +95,14 @@ function SignUp() {
       .catch((err) => {
         console.log(`Error ${err}`);
       });
+  };
+
+  const PostData = () => {
+    if (image) {
+      uploadPic();
+    } else {
+      uploadFields();
+    }
   };
 
   return (
@@ -90,6 +133,18 @@ function SignUp() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <div className="file-field input-field">
+            <div className="btn #64b5f6 blue darken-1">
+              <span>Upload Pic</span>
+              <input
+                type="file"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
+            </div>
+            <div className="file-path-wrapper">
+              <input type="text" className="file-path validate" />
+            </div>
+          </div>
           <button
             className="btn waves-effect waves-light #64b5f6 blue darken-1"
             onClick={PostData}

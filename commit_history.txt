@@ -160,3 +160,18 @@
         - create new component SubscribesUserPosts : for show all post who he/she follow 
         - SubscribesUserPosts : Integrate with backend /allsubpost
         - few css changes 
+
+30. Both : 
+    FD : 
+        - add user profile feature
+            - add upload pic in SignUp.js 
+            - minor chanage at following components : 
+                - Profile 
+                - UserProfile
+
+    BD : 
+        - add user profile feature
+            - add profile_pic field in User Schema 
+            - changes at routes : 
+                - /signup
+                - /signin

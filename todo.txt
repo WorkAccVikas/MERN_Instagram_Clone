@@ -5,3 +5,5 @@
     - second for each post comment need to sorted latest first
 
 - delete comment same functionality as delete post
+
+- default profile pic in env file

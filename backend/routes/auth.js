@@ -16,7 +16,7 @@ router.get("/", (req, res) => {
 // POINT : For Sign-Up
 router.post("/signup", (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, pic } = req.body;
     // ACTION : If empty name, email, password
     if (!name || !email || !password) {
       return res.status(422).json({ error: "All fields are required" });
@@ -38,6 +38,7 @@ router.post("/signup", (req, res) => {
             name,
             email: email.toLowerCase(),
             password: hashedPassword,
+            profile_pic: pic,
           });
 
           // ACTION : Data save in collection
@@ -92,14 +93,22 @@ router.post("/signin", (req, res) => {
                 expiresIn: "1d",
               });
               // const { _id, name, email } = savedUser;
-              const { _id, name, email, following, followers } = savedUser;
+              const { _id, name, email, following, followers, profile_pic } =
+                savedUser;
               return (
                 res
                   .status(200)
                   // .json({ token, user: { _id, name, email } });
                   .json({
                     token,
-                    user: { _id, name, email, following, followers },
+                    user: {
+                      _id,
+                      name,
+                      email,
+                      following,
+                      followers,
+                      profile_pic,
+                    },
                   })
               );
             }
