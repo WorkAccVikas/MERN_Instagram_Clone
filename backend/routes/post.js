@@ -87,6 +87,7 @@ router.put("/like", requireLogin, (req, res) => {
         },
         { new: true }
       )
+      .populate("comments.postedBy", "_id name")
       .then((result) => {
         return res.status(200).json(result);
       })
@@ -110,6 +111,8 @@ router.put("/unlike", requireLogin, (req, res) => {
         },
         { new: true }
       )
+      .populate("comments.postedBy", "_id name")
+
       .then((result) => {
         return res.status(200).json(result);
       })

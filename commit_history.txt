@@ -186,3 +186,12 @@
     BD :
          - update user profile feature 
             - add /updatepic route : for update profile pic of user
+
+
+32. Both : 
+    BD : 
+        - fix  : when like or unlike button click at Home and SubscribesUserPosts comments username disappear 
+            - change at /like and /unlike
+
+    FD : 
+        - few UI fix 

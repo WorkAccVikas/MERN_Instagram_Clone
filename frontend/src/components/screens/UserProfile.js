@@ -137,6 +137,7 @@ function UserProfile() {
               justifyContent: "space-around",
               margin: "18px 0",
               borderBottom: "1px solid grey",
+              paddingBottom: "20px",
             }}
           >
             <div>
@@ -160,7 +161,10 @@ function UserProfile() {
                   width: "108%",
                 }}
               >
-                <h5>{userProfile.posts.length} posts</h5>
+                <h5>
+                  {userProfile.posts.length}{" "}
+                  {userProfile.posts.length > 1 ? "posts" : "post"}
+                </h5>
                 <h5>{userProfile.user.followers.length} followers</h5>
                 <h5>{userProfile.user.following.length} following</h5>
               </div>

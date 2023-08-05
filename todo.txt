@@ -7,3 +7,13 @@
 - delete comment same functionality as delete post
 
 - default profile pic in env file
+
+- when user signup enter already present email it will throw error on UI but pic upload on cloudinary
+
+- on click on followers and following at /profile route UI show users in popup dialog box 
+
+- click on own post at /profile it open full screen on modal (event delegation)
+
+- if you don't follow any user and then you click on my following post it will display empty 
+    we will add no following post image and on that image one button to redirect to Home.js 
+

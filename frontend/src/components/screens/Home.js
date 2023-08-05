@@ -3,6 +3,9 @@ import { UserContext } from "../../App";
 import fallBackImage from "../../assets/No_Image_Available.jpg";
 import M from "materialize-css";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
+// NOTE ; Here, data and time as per IST
+
 
 function Home() {
   console.count("Home");
@@ -129,19 +132,34 @@ function Home() {
     <div className="home">
       {data?.map((post) => (
         <div key={post._id} className="card home-card">
-          <h5 style={{ padding: "5px", cursor: "pointer" }}>
+          <h5 style={{ padding: "10px", cursor: "pointer" }}>
             {/* ACTION : If user A login and when he click on other username on post 
                         then it will redirect to /profile/userid and if click on his how
                         post then it will redirect to /profile  */}
-            <Link
-              to={
-                post.postedBy._id !== state._id
-                  ? `/profile/${post.postedBy._id}`
-                  : "/profile"
-              }
-            >
-              {post.postedBy.name}
-            </Link>
+            <strong style={{ fontWeight: "800", letterSpacing: "10px" }}>
+              <Link
+                to={
+                  post.postedBy._id !== state._id
+                    ? `/profile/${post.postedBy._id}`
+                    : "/profile"
+                }
+              >
+                {post.postedBy.name}
+              </Link>
+              <span
+                style={{
+                  all: "initial",
+                  position: "relative",
+                  bottom: "-0.5em",
+                  color: "gray",
+                }}
+              >
+                {dayjs(post?.createdAt).format("MMM D, YYYY") +
+                  " at " +
+                  dayjs(post?.createdAt).format("hh:mm:ss A")}
+              </span>
+            </strong>
+
             {post.postedBy._id === state._id && (
               <i
                 className="material-icons"
@@ -183,15 +201,17 @@ function Home() {
             </h6>
             <h6>{post.title}</h6>
             <p>{post.body}</p>
-            {post?.comments.map((eachComment) => (
-              <h6 key={eachComment._id}>
-                <span style={{ fontWeight: "500" }}>
-                  {eachComment.postedBy.name}
-                </span>{" "}
-                : {eachComment.text}{" "}
-                {/* <small style={{ color: "grey" }}>{eachComment.createdAt}</small> */}
-                {/* TOPIC : Change format of date */}
-                {/* <small style={{ color: "grey", fontSize: "60%" }}>
+
+            {post &&
+              post?.comments.map((eachComment) => (
+                <h6 key={eachComment._id}>
+                  <span style={{ fontWeight: "600" }}>
+                    {eachComment?.postedBy?.name}
+                  </span>{" "}
+                  : {eachComment.text}{" "}
+                  {/* <small style={{ color: "grey" }}>{eachComment.createdAt}</small> */}
+                  {/* TOPIC : Change format of date */}
+                  {/* <small style={{ color: "grey", fontSize: "60%" }}>
                   {new Intl.DateTimeFormat("en-US", {
                     year: "numeric",
                     month: "long",
@@ -202,8 +222,9 @@ function Home() {
                     hour12: true,
                   }).format(new Date(eachComment.createdAt))}
                 </small> */}
-              </h6>
-            ))}
+                </h6>
+              ))}
+
             <form
               onSubmit={(e) => {
                 e.preventDefault();

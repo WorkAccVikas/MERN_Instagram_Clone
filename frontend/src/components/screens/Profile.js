@@ -12,6 +12,8 @@ function Profile() {
   const [image, setImage] = useState("");
   const fileInputRef = useRef(null);
 
+  console.log("state = ", state);
+
   useEffect(() => {
     fetch("http://localhost:5000/mypost", {
       headers: {
@@ -54,7 +56,7 @@ function Profile() {
               console.log(result);
               localStorage.setItem(
                 "user",
-                JSON.stringify({ ...state, pic: result.profile_pic })
+                JSON.stringify({ ...state, profile_pic: result.profile_pic })
               );
               dispatch({
                 type: ACTION.UPDATE_PIC,
@@ -85,7 +87,13 @@ function Profile() {
 
   return (
     <div style={{ maxWidth: "550px", margin: "0 auto" }}>
-      <div style={{ margin: "18px 0px", borderBottom: "1px solid grey" }}>
+      <div
+        style={{
+          margin: "18px 0px",
+          borderBottom: "1px solid grey",
+          paddingBottom: "20px",
+        }}
+      >
         <div
           style={{
             display: "flex",
@@ -120,7 +128,9 @@ function Profile() {
                 width: "108%",
               }}
             >
-              <h5>{mypics.length} posts</h5>
+              <h5>
+                {mypics.length} {mypics.length > 1 ? "posts" : "post"}
+              </h5>
               <h5>{state?.followers?.length} followers</h5>
               <h5>{state?.following?.length} following</h5>
               {/* <h5>40 followers</h5>

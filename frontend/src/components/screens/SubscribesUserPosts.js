@@ -3,6 +3,14 @@ import { UserContext } from "../../App";
 import fallBackImage from "../../assets/No_Image_Available.jpg";
 import M from "materialize-css";
 import { Link } from "react-router-dom";
+import dayjs from "dayjs";
+import utc from "dayjs/plugin/utc";
+import tz from "dayjs/plugin/timezone";
+dayjs.extend(utc);
+dayjs.extend(tz);
+dayjs.tz.setDefault("America/New_York");
+// NOTE ; Here, data and time as per America/New_York
+
 
 function SubscribesUserPosts() {
   console.count("Home");
@@ -129,19 +137,34 @@ function SubscribesUserPosts() {
     <div className="home">
       {data?.map((post) => (
         <div key={post._id} className="card home-card">
-          <h5 style={{ padding: "5px", cursor: "pointer" }}>
+          <h5 style={{ padding: "10px", cursor: "pointer" }}>
             {/* ACTION : If user A login and when he click on other username on post 
                         then it will redirect to /profile/userid and if click on his how
                         post then it will redirect to /profile  */}
-            <Link
-              to={
-                post.postedBy._id !== state._id
-                  ? `/profile/${post.postedBy._id}`
-                  : "/profile"
-              }
-            >
-              {post.postedBy.name}
-            </Link>
+            <strong style={{ fontWeight: "800", letterSpacing: "10px" }}>
+              <Link
+                to={
+                  post.postedBy._id !== state._id
+                    ? `/profile/${post.postedBy._id}`
+                    : "/profile"
+                }
+              >
+                {post.postedBy.name}
+              </Link>
+              <span
+                style={{
+                  all: "initial",
+                  position: "relative",
+                  bottom: "-0.5em",
+                  color: "gray",
+                }}
+              >
+                {dayjs(post?.createdAt).tz().format("MMM D, YYYY") +
+                  " at " +
+                  dayjs(post?.createdAt).tz().format("hh:mm:ss A")}
+              </span>
+            </strong>
+
             {post.postedBy._id === state._id && (
               <i
                 className="material-icons"
@@ -185,7 +208,7 @@ function SubscribesUserPosts() {
             <p>{post.body}</p>
             {post?.comments.map((eachComment) => (
               <h6 key={eachComment._id}>
-                <span style={{ fontWeight: "500" }}>
+                <span style={{ fontWeight: "600" }}>
                   {eachComment.postedBy.name}
                 </span>{" "}
                 : {eachComment.text}{" "}
