@@ -176,12 +176,10 @@ router.delete("/deletepost/:postId", requireLogin, (req, res) => {
             .deleteOne({ _id: req.params.postId })
             .then((result) => {
               console.log({ result });
-              return res
-                .status(200)
-                .json({
-                  message: "Post deleted successfully",
-                  _id: data._id,
-                });
+              return res.status(200).json({
+                message: "Post deleted successfully",
+                _id: data._id,
+              });
             })
             .catch((err) => {
               console.log(err);
@@ -199,6 +197,24 @@ router.delete("/deletepost/:postId", requireLogin, (req, res) => {
         // console.log(err);
         return res.status(422).json({ err: err.message });
       });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// POINT : For finding all posts of whom he/she follow
+router.get("/allsubpost", requireLogin, async (req, res) => {
+  try {
+    /* ACTION : Find all posts and populate postedBy field and 
+    show only _id, name and then sort by latest post created by using createdAt */
+    const posts = await postModel
+      .find({
+        postedBy: req.user.following,
+      })
+      .populate("postedBy", "_id name")
+      .populate("comments.postedBy", "_id name")
+      .sort("-createdAt");
+    return res.status(200).json({ posts, totalCount: posts.length });
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }

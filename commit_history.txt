@@ -152,3 +152,6 @@
             - update the state with new field added followers, following
             - show followers, following in Profile.js 
             - If user follow User A then even if page reload unfollow button is still show (Explanation : UserProfile.js)
+
+28. BD : 
+        - create a route /allsubpost : for get all posts of followed user by him/her.
