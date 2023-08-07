@@ -17,6 +17,7 @@ import UserProfile from "./components/screens/UserProfile";
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { ACTION, initialState, reducer } from "./reducers/userReducer";
 import SubscribesUserPosts from "./components/screens/SubscribesUserPosts";
+import Reset from "./components/screens/Reset";
 
 // POINT : Create Context
 export const UserContext = createContext();
@@ -60,6 +61,7 @@ const Routing = () => {
           </Layout>
         }
       />
+      <Route path="/reset" element={<Reset />} />
     </Routes>
   );
 };
@@ -95,6 +97,10 @@ function App() {
       <BrowserRouter>
         <Navbar />
         <Routing />
+        {/* IMP : Use this to avoid Layout for in Routing multiple time */}
+        {/* <Layout>
+          <Routing />
+        </Layout> */}
       </BrowserRouter>
     </UserContext.Provider>
   );

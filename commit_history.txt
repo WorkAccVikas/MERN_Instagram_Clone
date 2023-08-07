@@ -199,3 +199,16 @@
 33. BD : 
         - new route /sendMail : 
             Send Mail to authenticated user only for use of after successfully registered or reset-password
+
+34. Both : 
+    FD : 
+        - Integrate /sendMail at SignUp.js : After successful registration send mail 
+        - add new component Reset 
+        - add new route in App.js /reset for Reset component 
+        - Integrate /resetPassword at Reset.js : User successfully receive email (tested)
+            
+    BD : 
+        - Change User Schema : add two fields : resetToken, expireToken 
+        - add new route /resetPassword
+        
+        

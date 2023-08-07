@@ -1,13 +1,10 @@
-import React, { useContext, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { UserContext } from "../../App";
 import M from "materialize-css";
+import React, { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
-function SignIn() {
-  console.count("SignIn");
-  const { state, dispatch } = useContext(UserContext);
+function Reset() {
+  console.count("Reset");
 
-  const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
@@ -19,14 +16,13 @@ function SignIn() {
       return;
     }
 
-    fetch("http://localhost:5000/signin", {
+    fetch("http://localhost:5000/resetPassword", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        email,
-        password,
+        userEmail: email,
       }),
     })
       .then((res) => res.json())
@@ -34,14 +30,11 @@ function SignIn() {
         if (data.error) {
           M.toast({ html: data.error, classes: "#c62828 red darken-3" });
         } else {
-          localStorage.setItem("jwt", data.token);
-          localStorage.setItem("user", JSON.stringify(data.user));
-          dispatch({ type: "USER", payload: data.user });
           M.toast({
-            html: `Welcome ${data.user.name}`,
+            html: `Check your mail for reset password`,
             classes: "#43a047 green darken-1",
           });
-          navigate("/");
+          navigate("/signin");
         }
       })
       .catch((err) => {
@@ -60,28 +53,16 @@ function SignIn() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
-          <input
-            type="password"
-            placeholder="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
           <button
             className="btn waves-effect waves-light #64b5f6 blue darken-1"
             onClick={PostData}
           >
-            Login
+            Reset Password
           </button>
-          <h5>
-            <Link to="/signup">Don't have an account ?</Link>
-          </h5>
-          <h6>
-            <Link to="/reset">Forgot password ?</Link>
-          </h6>
         </div>
       </div>
     </div>
   );
 }
 
-export default SignIn;
+export default Reset;

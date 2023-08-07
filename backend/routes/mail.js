@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const sendMail = require("../helper/mailer");
+const { sendMail } = require("../helper/mailer");
 const verifyUser = require("../middlewares/verifyUser");
 
 // POINT : send mail to user

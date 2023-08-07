@@ -69,7 +69,7 @@ function SignUp() {
     }
 
     fetch("http://localhost:5000/signup", {
-      method: "post",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -88,6 +88,19 @@ function SignUp() {
           M.toast({
             html: "Register Successfully",
             classes: "#43a047 green darken-1",
+          });
+          // ACTION : Send mail to user email
+          fetch("http://localhost:5000/sendMail", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              username: name,
+              userEmail: email,
+              text: "Congrats, You successful registered.",
+              subject: "Registration Successful",
+            }),
           });
           navigate("/signin");
         }
