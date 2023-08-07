@@ -10,6 +10,7 @@ const loggingMiddleware = require("./middlewares/loggingMiddleware");
 const authRoute = require("./routes/auth");
 const postRoute = require("./routes/post");
 const userRoute = require("./routes/user");
+const mailRoute = require("./routes/mail");
 const mongoConnection = require("./connection/mongo_connection");
 const userModel = require("./model/User");
 
@@ -67,6 +68,8 @@ app.use(authRoute);
 app.use(postRoute);
 // POINT : add user Route
 app.use(userRoute);
+// POINT : add mail Route
+app.use(mailRoute);
 
 // app.get("/", (req, res) => {
 //   console.log("Root route");

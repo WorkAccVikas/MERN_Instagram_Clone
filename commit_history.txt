@@ -195,3 +195,7 @@
 
     FD : 
         - few UI fix 
+
+33. BD : 
+        - new route /sendMail : 
+            Send Mail to authenticated user only for use of after successfully registered or reset-password

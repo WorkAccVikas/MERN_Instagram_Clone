@@ -6,3 +6,4 @@
 6. npm install bcrypt
 7. npm install jsonwebtoken
 8. npm install cors
+9. npm install nodemailer mailgen 
