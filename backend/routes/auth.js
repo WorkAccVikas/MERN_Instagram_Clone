@@ -137,6 +137,8 @@ router.post("/resetPassword", verifyUser, (req, res) => {
   try {
     const { user: userData } = req;
 
+    // LEARN : How to send reset password link on email
+    // DESC : Use built-in-module crypto
     crypto.randomBytes(32, (err, buffer) => {
       if (err) {
         console.log("Error while crypto = ", err);
@@ -146,8 +148,8 @@ router.post("/resetPassword", verifyUser, (req, res) => {
       const token = buffer.toString("hex");
       // console.log(token);
       // ACTION : expire time = ms * sec * min
-      // const time = 1000 * 60 * 60;  // 1hr
-      const time = 1000 * 60;  // 1min
+      const time = 1000 * 60 * 60; // 1hr
+      // const time = 1000 * 5 * 60; // 5min
       userData.resetToken = token;
       userData.expireToken = Date.now() + time;
       // console.log("From md = ", userData);
@@ -180,6 +182,44 @@ router.post("/resetPassword", verifyUser, (req, res) => {
       });
     });
     // return res.status(200).json({ message: "Reset" });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// POINT : For New Password
+router.post("/newPassword", (req, res) => {
+  try {
+    const newPassword = req.body.password;
+    const sentToken = req.body.token;
+    // console.log({ newPassword, sentToken });
+    if (!newPassword || !sentToken) {
+      return res.status(400).json({ error: "Bad Request" });
+    }
+    userModel
+      .findOne({ resetToken: sentToken, expireToken: { $gt: Date.now() } })
+      .then((user) => {
+        // console.log(`🚀 ~ file: auth.js:196 ~ .then ~ user:`, user);
+        if (!user) {
+          // ACTION : User not found
+          return res.status(404).json({ error: "Session Expired" });
+        }
+        // ACTION : User found so hash password and saved in collection and set resetToken and expireToken to undefined
+        bcrypt.hash(newPassword, 12).then((hashedPassword) => {
+          user.password = hashedPassword;
+          user.resetToken = undefined;
+          user.expireToken = undefined;
+
+          user.save().then((savedUser) => {
+            return res
+              .status(200)
+              .json({ message: "Password Update Successfully" });
+          });
+        });
+      })
+      .catch((err) => {
+        return res.status(500).json({ error: err.message });
+      });
   } catch (error) {
     return res.status(500).json({ error: "Internal Server Error" });
   }

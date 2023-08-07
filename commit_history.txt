@@ -206,9 +206,13 @@
         - add new component Reset 
         - add new route in App.js /reset for Reset component 
         - Integrate /resetPassword at Reset.js : User successfully receive email (tested)
+        - add new component NewPassword
+        - add new route in App.js /reset/:token for NewPassword 
+        - Integrate /newPassword at NewPassword.js : User successfully update password (tested)
             
     BD : 
         - Change User Schema : add two fields : resetToken, expireToken 
         - add new route /resetPassword
+        - add new route /newPassword
         
         

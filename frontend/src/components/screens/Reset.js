@@ -28,10 +28,13 @@ function Reset() {
       .then((res) => res.json())
       .then((data) => {
         if (data.error) {
-          M.toast({ html: data.error, classes: "#c62828 red darken-3" });
+          M.toast({
+            html: "Email not found in our records",
+            classes: "#c62828 red darken-3",
+          });
         } else {
           M.toast({
-            html: `Check your mail for reset password`,
+            html: `Check your mail`,
             classes: "#43a047 green darken-1",
           });
           navigate("/signin");

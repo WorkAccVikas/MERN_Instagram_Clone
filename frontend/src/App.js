@@ -18,6 +18,7 @@ import { createContext, useContext, useEffect, useReducer } from "react";
 import { ACTION, initialState, reducer } from "./reducers/userReducer";
 import SubscribesUserPosts from "./components/screens/SubscribesUserPosts";
 import Reset from "./components/screens/Reset";
+import NewPassword from "./components/screens/NewPassword";
 
 // POINT : Create Context
 export const UserContext = createContext();
@@ -62,6 +63,7 @@ const Routing = () => {
         }
       />
       <Route path="/reset" element={<Reset />} />
+      <Route path="/reset/:token" element={<NewPassword />} />
     </Routes>
   );
 };
