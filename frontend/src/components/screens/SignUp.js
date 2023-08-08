@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import M from "materialize-css";
+import { API_BASE_URL } from "../../config/apiConfig";
 
 function SignUp() {
   console.count("SignUp");
@@ -11,6 +12,10 @@ function SignUp() {
   const [image, setImage] = useState("");
   const [url, setUrl] = useState(undefined);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = "Instagram - SignUp";
+  }, []);
 
   useEffect(() => {
     if (url) {
@@ -46,6 +51,13 @@ function SignUp() {
   };
 
   const uploadFields = () => {
+    if (!name || !email || !password) {
+      M.toast({
+        html: "Please enter all field",
+        classes: "#c62828 red darken-3",
+      });
+      return;
+    }
     // ACTION : Check email pattern
     const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (!emailPattern.test(email)) {
@@ -68,7 +80,7 @@ function SignUp() {
       return;
     }
 
-    fetch("http://localhost:5000/signup", {
+    fetch(`${API_BASE_URL}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +102,7 @@ function SignUp() {
             classes: "#43a047 green darken-1",
           });
           // ACTION : Send mail to user email
-          fetch("http://localhost:5000/sendMail", {
+          fetch(`${API_BASE_URL}/sendMail`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",

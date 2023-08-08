@@ -3,6 +3,7 @@ import { UserContext } from "../../App";
 import fallBackImage from "../../assets/No_Image_Available.jpg";
 import { useParams } from "react-router-dom";
 import { ACTION } from "../../reducers/userReducer";
+import { API_BASE_URL } from "../../config/apiConfig";
 
 function UserProfile() {
   console.count("UserProfile");
@@ -30,14 +31,14 @@ function UserProfile() {
 
   // const [showfollow, setShowFollow] = useState(true);
 
-  console.log("Ahe ka ? => ", state?.following?.includes(userid));
-  console.log(userid, typeof userid);
-  console.log("Vikas = ", showfollow);
-  console.log("ram = ", state !== null);
+  // console.log("Ahe ka ? => ", state?.following?.includes(userid));
+  // console.log(userid, typeof userid);
+  // console.log("Vikas = ", showfollow);
+  // console.log("ram = ", state !== null);
 
   useEffect(() => {
     console.count("UserProfile useEffect run");
-    fetch(`http://localhost:5000/user/${userid}`, {
+    fetch(`${API_BASE_URL}/user/${userid}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -49,13 +50,21 @@ function UserProfile() {
       });
   }, []);
 
+  useEffect(() => {
+    if (!!userProfile) {
+      document.title = `Instagram - ${userProfile.user.name}`;
+    } else {
+      document.title = "Instagram";
+    }
+  }, [userProfile]);
+
   const handleImageError = (event) => {
     event.target.src = fallBackImage;
     // https://upload.wikimedia.org/wikipedia/commons/1/14/No_Image_Available.jpg?20200913095930
   };
 
   const followUser = () => {
-    fetch("http://localhost:5000/follow", {
+    fetch(`${API_BASE_URL}/follow`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -90,7 +99,7 @@ function UserProfile() {
   };
 
   const unfollowUser = () => {
-    fetch("http://localhost:5000/unfollow", {
+    fetch(`${API_BASE_URL}/unfollow`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

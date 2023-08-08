@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserContext } from "../../App";
 import M from "materialize-css";
+import { API_BASE_URL } from "../../config/apiConfig";
 
 function SignIn() {
   console.count("SignIn");
@@ -11,7 +12,18 @@ function SignIn() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "Instagram - SignIn";
+  }, []);
+
   const PostData = () => {
+    if (!email || !password) {
+      M.toast({
+        html: "Please enter all field",
+        classes: "#c62828 red darken-3",
+      });
+      return;
+    }
     // ACTION : Check email pattern
     const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (!emailPattern.test(email)) {
@@ -19,7 +31,7 @@ function SignIn() {
       return;
     }
 
-    fetch("http://localhost:5000/signin", {
+    fetch(`${API_BASE_URL}/signin`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -226,4 +226,11 @@
         
     FD :
         - Integrate search feature in Navbar.js
-        
+
+37. Both : 
+    FD : 
+        - Replace http://localhost:5000 to API_BASE_URL in config/apiConfig.js in .env file
+        - set document.title for every route
+
+    BD : 
+        - Add HOST in .env file for link in email

@@ -10,6 +10,7 @@ import { Link, Outlet, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import { ACTION } from "../reducers/userReducer";
 import M from "materialize-css";
+import { API_BASE_URL } from "../config/apiConfig";
 
 // const set = new Set();
 // const set1 = new Set();
@@ -50,7 +51,7 @@ function Navbar() {
         setUserDetails([]);
       } else {
         console.log("Fetching...............");
-        fetch("http://localhost:5000/searchUsers", {
+        fetch(`${API_BASE_URL}/searchUsers`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -70,11 +71,12 @@ function Navbar() {
     }
   };
 
+  // ACTION : Debounce on search
   useEffect(() => {
     console.log("useEffect runs...");
     let debounce = setTimeout(() => {
       fetchData();
-    }, 5000);
+    }, 1000);
     return () => {
       console.log("cleanup.....");
       clearTimeout(debounce);

@@ -1,7 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { UserContext } from "../../App";
 import M from "materialize-css";
+import { API_BASE_URL } from "../../config/apiConfig";
 
 function NewPassword() {
   console.count("NewPassword");
@@ -11,6 +12,10 @@ function NewPassword() {
   const navigate = useNavigate();
   const { token } = useParams();
   console.log(token);
+
+  useEffect(() => {
+    document.title = "Instagram - New Password";
+  }, []);
 
   const PostData = () => {
     if (!password || !confirmPassword) {
@@ -50,7 +55,7 @@ function NewPassword() {
       return;
     }
 
-    fetch("http://localhost:5000/newPassword", {
+    fetch(`${API_BASE_URL}/newPassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -19,6 +19,7 @@ import { ACTION, initialState, reducer } from "./reducers/userReducer";
 import SubscribesUserPosts from "./components/screens/SubscribesUserPosts";
 import Reset from "./components/screens/Reset";
 import NewPassword from "./components/screens/NewPassword";
+import { API_BASE_URL } from "./config/apiConfig";
 
 // POINT : Create Context
 export const UserContext = createContext();
@@ -72,6 +73,7 @@ const Layout = ({ children }) => {
   console.count("Layout");
 
   const navigate = useNavigate();
+  const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
@@ -79,6 +81,7 @@ const Layout = ({ children }) => {
     const user = JSON.parse(localStorage.getItem("user"));
 
     console.log("user = ", user);
+    console.log(location);
 
     if (user) {
       dispatch({ type: ACTION.USER, payload: user });
@@ -93,6 +96,10 @@ const Layout = ({ children }) => {
 function App() {
   console.count("App");
   const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    fetch(`${API_BASE_URL}`);
+  }, []);
 
   return (
     <UserContext.Provider value={{ state, dispatch }}>

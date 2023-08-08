@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 import tz from "dayjs/plugin/timezone";
+import { API_BASE_URL } from "../../config/apiConfig";
 dayjs.extend(utc);
 dayjs.extend(tz);
 dayjs.tz.setDefault("America/New_York");
@@ -18,7 +19,9 @@ function SubscribesUserPosts() {
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:5000/allsubpost", {
+        document.title = "Instagram - My Following";
+
+    fetch(`${API_BASE_URL}/allsubpost`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -38,7 +41,7 @@ function SubscribesUserPosts() {
   };
 
   const likePost = (id) => {
-    fetch("http://localhost:5000/like", {
+    fetch(`${API_BASE_URL}/like`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -63,7 +66,7 @@ function SubscribesUserPosts() {
   };
 
   const unlikePost = (id) => {
-    fetch("http://localhost:5000/unlike", {
+    fetch(`${API_BASE_URL}/unlike`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +91,7 @@ function SubscribesUserPosts() {
   };
 
   const makeComment = (text, postId) => {
-    fetch("http://localhost:5000/comment", {
+    fetch(`${API_BASE_URL}/comment`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +116,7 @@ function SubscribesUserPosts() {
   };
 
   const deletePost = (postId) => {
-    fetch(`http://localhost:5000/deletepost/${postId}`, {
+    fetch(`${API_BASE_URL}/deletepost/${postId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),

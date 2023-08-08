@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import M from "materialize-css";
+import { API_BASE_URL } from "../../config/apiConfig";
 
 function CreatePost() {
   console.count("CreatePost");
@@ -12,7 +13,7 @@ function CreatePost() {
 
   useEffect(() => {
     if (url) {
-      fetch("http://localhost:5000/createpost", {
+      fetch(`${API_BASE_URL}/createpost`, {
         method: "post",
         headers: {
           "Content-Type": "application/json",
@@ -37,10 +38,14 @@ function CreatePost() {
           }
         })
         .catch((err) => {
-          console.log('Error while creating post = ',err);
+          console.log("Error while creating post = ", err);
         });
     }
   }, [url]);
+
+  useEffect(() => {
+    document.title = "Instagram - Create Post";
+  }, []);
 
   const postDetails = () => {
     const data = new FormData();

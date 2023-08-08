@@ -1,6 +1,7 @@
 import M from "materialize-css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { API_BASE_URL } from "../../config/apiConfig";
 
 function Reset() {
   console.count("Reset");
@@ -8,7 +9,18 @@ function Reset() {
   const [email, setEmail] = useState("");
   const navigate = useNavigate();
 
+  useEffect(() => {
+    document.title = "Instagram - Reset Password";
+  }, []);
+
   const PostData = () => {
+    if (!email) {
+      M.toast({
+        html: "Please enter email",
+        classes: "#c62828 red darken-3",
+      });
+      return;
+    }
     // ACTION : Check email pattern
     const emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
     if (!emailPattern.test(email)) {
@@ -16,7 +28,7 @@ function Reset() {
       return;
     }
 
-    fetch("http://localhost:5000/resetPassword", {
+    fetch(`${API_BASE_URL}/resetPassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

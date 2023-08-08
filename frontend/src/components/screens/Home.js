@@ -4,8 +4,8 @@ import fallBackImage from "../../assets/No_Image_Available.jpg";
 import M from "materialize-css";
 import { Link } from "react-router-dom";
 import dayjs from "dayjs";
+import { API_BASE_URL } from "../../config/apiConfig";
 // NOTE ; Here, data and time as per IST
-
 
 function Home() {
   console.count("Home");
@@ -13,7 +13,9 @@ function Home() {
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    fetch("http://localhost:5000/allpost", {
+    document.title = "Instagram - Home";
+
+    fetch(`${API_BASE_URL}/allpost`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -33,7 +35,7 @@ function Home() {
   };
 
   const likePost = (id) => {
-    fetch("http://localhost:5000/like", {
+    fetch(`${API_BASE_URL}/like`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -58,7 +60,7 @@ function Home() {
   };
 
   const unlikePost = (id) => {
-    fetch("http://localhost:5000/unlike", {
+    fetch(`${API_BASE_URL}/unlike`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -83,7 +85,7 @@ function Home() {
   };
 
   const makeComment = (text, postId) => {
-    fetch("http://localhost:5000/comment", {
+    fetch(`${API_BASE_URL}/comment`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +110,7 @@ function Home() {
   };
 
   const deletePost = (postId) => {
-    fetch(`http://localhost:5000/deletepost/${postId}`, {
+    fetch(`${API_BASE_URL}/deletepost/${postId}`, {
       method: "DELETE",
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),

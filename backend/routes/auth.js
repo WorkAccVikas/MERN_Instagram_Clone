@@ -5,14 +5,14 @@ const jwt = require("jsonwebtoken");
 const crypto = require("crypto");
 const userModel = require("../model/User");
 const requireLogin = require("../middlewares/requireLogin");
-const { JWT_SECRET } = require("../config/config");
+const { JWT_SECRET, HOST } = require("../config/config");
 const verifyUser = require("../middlewares/verifyUser");
 const { sendMail, nodeMailerDetails } = require("../helper/mailer");
 
 router.get("/", (req, res) => {
   console.log("Home");
   res.status(200).json({
-    msg: "Hello World",
+    msg: "Welcome to Instagram",
   });
 });
 
@@ -178,7 +178,8 @@ router.post("/resetPassword", verifyUser, (req, res) => {
       // console.log({ userData });
       const text = `
                      <p>You requested for password reset</p>
-                     <p>click in this <a href="http://localhost:3000/reset/${token}"><b>link</b></a> to reset password</p>
+                     <p>click in this <a href="${HOST}/reset/${token}"><b>link</b></a> to reset password</p>
+                     <p>Note : This link is valid for only 1 hour.</p>
                      `;
 
       userData.save().then((result) => {

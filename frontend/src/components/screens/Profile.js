@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from "react";
 import { UserContext } from "../../App";
 import fallBackImage from "../../assets/No_Image_Available.jpg";
 import { ACTION } from "../../reducers/userReducer";
+import { API_BASE_URL } from "../../config/apiConfig";
 
 function Profile() {
   console.count("Profile");
@@ -15,7 +16,9 @@ function Profile() {
   console.log("state = ", state);
 
   useEffect(() => {
-    fetch("http://localhost:5000/mypost", {
+    document.title = "Instagram - Profile";
+
+    fetch(`${API_BASE_URL}/mypost`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
       },
@@ -41,7 +44,7 @@ function Profile() {
           return res.json();
         })
         .then((data) => {
-          fetch("http://localhost:5000/updatepic", {
+          fetch(`${API_BASE_URL}/updatepic`, {
             method: "PUT",
             headers: {
               "Content-Type": "application/json",
