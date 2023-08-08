@@ -1,7 +1,15 @@
-import React, { useCallback, useContext, useMemo } from "react";
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import { UserContext } from "../App";
 import { ACTION } from "../reducers/userReducer";
+import M from "materialize-css";
 
 // const set = new Set();
 // const set1 = new Set();
@@ -11,6 +19,34 @@ function Navbar() {
 
   const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
+  const searchModalRef = useRef(null);
+  const [search, setSearch] = useState("");
+  const [userDetails, setUserDetails] = useState([]);
+
+  useEffect(() => {
+    M.Modal.init(searchModalRef.current);
+  }, []);
+
+  const fetchData = async () => {
+    try {
+      if (search) {
+        console.log("Fetching...............");
+      }
+    } catch (error) {
+      console.log("Error while fetching data = ", error);
+    }
+  };
+
+  useEffect(() => {
+    console.log("useEffect runs...");
+    let debounce = setTimeout(() => {
+      fetchData();
+    }, 5000);
+    return () => {
+      console.log("cleanup.....");
+      clearTimeout(debounce);
+    };
+  }, [search]);
 
   // PROBLEM : For every render it create new function
   // const renderList = () => {
@@ -54,9 +90,19 @@ function Navbar() {
     if (state) {
       return [
         <li key="1">
+          <i
+            data-target="modal1"
+            className="large material-icons modal-trigger"
+            style={{ color: "black" }}
+          >
+            search
+          </i>
+        </li>,
+
+        <li key="2">
           <Link to="/profile">Profile</Link>
         </li>,
-        <li key="2">
+        <li key="3">
           <Link to="/create">Create Post</Link>
         </li>,
         <li key="4">
@@ -105,6 +151,32 @@ function Navbar() {
             {/* {renderList()} */}
             {renderList}
           </ul>
+        </div>
+        <div
+          id="modal1"
+          className="modal"
+          ref={searchModalRef}
+          style={{ color: "black" }}
+        >
+          <div className="modal-content">
+            <input
+              type="text"
+              placeholder="search users"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            />
+            <ul className="collection">
+              <li className="collection-item">Alvin</li>
+              <li className="collection-item">Alvin</li>
+              <li className="collection-item">Alvin</li>
+              <li className="collection-item">Alvin</li>
+            </ul>
+          </div>
+          <div className="modal-footer">
+            <button className="modal-close waves-effect waves-green btn-flat">
+              Agree
+            </button>
+          </div>
         </div>
       </nav>
       <Outlet />
