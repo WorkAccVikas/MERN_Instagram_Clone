@@ -217,4 +217,13 @@
         
 35. FD : 
         - Add Basic UI for search user in Navbar.js
+
+36. Both : 
+    BD : 
+        - Change logic in /signup route : 
+            - Previous : Search by email (Case sensitive)
+            - Now : Search by either email or name (Case insensitive) and show custom error message if particular filed is present in db 
+        
+    FD :
+        - Integrate search feature in Navbar.js
         

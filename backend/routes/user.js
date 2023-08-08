@@ -132,4 +132,23 @@ router.put("/updatepic", requireLogin, (req, res) => {
   }
 });
 
+// POINT : Search users by using email or name
+router.post("/searchUsers", async (req, res) => {
+  try {
+    /** ACTION : Search by email or name case-insensitive and select only _id, name, email */
+    const userData = await userModel
+      .find({
+        $or: [
+          { email: { $regex: req.body.query, $options: "i" } },
+          { name: { $regex: req.body.query, $options: "i" } },
+        ],
+      })
+      .select("name email");
+
+    return res.status(200).send({ user: userData });
+  } catch (error) {
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 module.exports = router;

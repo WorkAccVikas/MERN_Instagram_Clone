@@ -17,3 +17,8 @@
 - if you don't follow any user and then you click on my following post it will display empty 
     we will add no following post image and on that image one button to redirect to Home.js 
 
+- bug : when we type in search box it will immediately show "User not found" before api call
+    - expected : after api call then show "User not found" (UI)
+
+- BD : rate limiter to /resetPassword 
+    - Expected  : User only have 3 times in a day.

@@ -58,6 +58,15 @@ h2 {
   margin: 26px auto;
 }
 
+.collection-item{
+  width: 100%;
+}
+
+.collection{
+  border:0
+}
+
+
 #toast-container {
   top: 30px !important;
   right: 20px !important;

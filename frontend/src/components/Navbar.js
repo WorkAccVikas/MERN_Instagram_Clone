@@ -25,12 +25,45 @@ function Navbar() {
 
   useEffect(() => {
     M.Modal.init(searchModalRef.current);
+    // LEARN : How to clear set when modal is closed when user click outside of modal
+    function handleClickOutside(event) {
+      // DESC : Return True if Parent contains child othewise false
+      if (
+        searchModalRef.current &&
+        !searchModalRef.current.contains(event.target)
+      ) {
+        setSearch("");
+      }
+    }
+
+    document.addEventListener("click", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, []);
 
   const fetchData = async () => {
     try {
-      if (search) {
+      if (!search) {
+        // ACTION : If search field is empty then set data to empty array
+        setUserDetails([]);
+      } else {
         console.log("Fetching...............");
+        fetch("http://localhost:5000/searchUsers", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            query: search,
+          }),
+        })
+          .then((res) => res.json())
+          .then((results) => {
+            console.log({ results });
+            setUserDetails(results.user);
+          });
       }
     } catch (error) {
       console.log("Error while fetching data = ", error);
@@ -140,6 +173,8 @@ function Navbar() {
   // set1.add(state);
   // console.log({ set1 });
 
+  console.log("search = ", search);
+
   return (
     <>
       <nav>
@@ -166,15 +201,40 @@ function Navbar() {
               onChange={(e) => setSearch(e.target.value)}
             />
             <ul className="collection">
-              <li className="collection-item">Alvin</li>
-              <li className="collection-item">Alvin</li>
-              <li className="collection-item">Alvin</li>
-              <li className="collection-item">Alvin</li>
+              {userDetails.length === 0 && search.length > 0 && (
+                <li className="collection-item">User not found</li>
+              )}
+
+              {userDetails?.map((item) => (
+                <Link
+                  key={item._id}
+                  to={
+                    item._id !== state._id ? "/profile/" + item._id : "/profile"
+                  }
+                  onClick={() => {
+                    M.Modal.getInstance(searchModalRef.current).close();
+                    setSearch("");
+                  }}
+                >
+                  <li
+                    className="collection-item"
+                    style={{ marginBottom: ".5rem" }}
+                  >
+                    <p>Name : {item.name}</p>
+                    <p>Email : {item.email}</p>
+                  </li>
+                </Link>
+              ))}
+
+              {/* <li className="collection-item">Alvin</li> */}
             </ul>
           </div>
           <div className="modal-footer">
-            <button className="modal-close waves-effect waves-green btn-flat">
-              Agree
+            <button
+              className="modal-close waves-effect waves-green btn-flat"
+              onClick={() => setSearch("")}
+            >
+              close
             </button>
           </div>
         </div>

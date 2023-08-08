@@ -24,14 +24,35 @@ router.post("/signup", (req, res) => {
     if (!name || !email || !password) {
       return res.status(422).json({ error: "All fields are required" });
     }
+    /** ACTION : Search by either email or name case-insensitive */
+    // LEARN : How to search multiple fields using or and case-insensitive
     userModel
-      .findOne({ email: email })
+      .findOne({
+        $or: [
+          { email: { $regex: email, $options: "i" } },
+          { name: { $regex: name, $options: "i" } },
+        ],
+      })
       .then((savedUser) => {
         // ACTION : If record found means user already existed while registering
+        // if (!!savedUser) {
+        //   return res
+        //     .status(400)
+        //     .json({ error: "User already exists with that email" });
+        // }
+
+        /** ACTION : Show respective error message for certain field match in db */
+        // LEARN : How to show custom error message if repsective field match in db
         if (!!savedUser) {
-          return res
-            .status(409)
-            .json({ error: "User already exists with that email" });
+          let errorMessage = "";
+          if (savedUser.name.toLowerCase() === name.toLowerCase()) {
+            errorMessage = "Name already exists.";
+          }
+          if (savedUser.email.toLowerCase() === email.toLowerCase()) {
+            errorMessage = "Email already exists.";
+          }
+
+          return res.status(400).json({ error: errorMessage });
         }
 
         // NOTE : Create hash password
@@ -47,9 +68,10 @@ router.post("/signup", (req, res) => {
           // ACTION : Data save in collection
           user
             .save()
-            .then((user) =>
-              res.status(201).json({ message: "Saved Successfully" })
-            )
+            .then((user) => {
+              console.log("user = ", user);
+              return res.status(201).json({ message: "Saved Successfully" });
+            })
             .catch((err) => {
               console.log("Error while inserting data = ", err);
             });
