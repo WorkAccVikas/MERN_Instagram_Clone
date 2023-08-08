@@ -5,7 +5,7 @@ import M from "materialize-css";
 import { API_BASE_URL } from "../../config/apiConfig";
 
 function SignIn() {
-  console.count("SignIn");
+  // console.count("SignIn");
   const { state, dispatch } = useContext(UserContext);
 
   const [password, setPassword] = useState("");

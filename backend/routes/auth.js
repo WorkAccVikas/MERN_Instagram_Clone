@@ -10,7 +10,7 @@ const verifyUser = require("../middlewares/verifyUser");
 const { sendMail, nodeMailerDetails } = require("../helper/mailer");
 
 router.get("/", (req, res) => {
-  console.log("Home");
+  // console.log("Home");
   res.status(200).json({
     msg: "Welcome to Instagram",
   });
@@ -69,7 +69,7 @@ router.post("/signup", (req, res) => {
           user
             .save()
             .then((user) => {
-              console.log("user = ", user);
+              // console.log("user = ", user);
               return res.status(201).json({ message: "Saved Successfully" });
             })
             .catch((err) => {
@@ -78,7 +78,7 @@ router.post("/signup", (req, res) => {
         });
       })
       .catch((err) => {
-        console.log("Error while main then = ", err);
+        // console.log("Error while main then = ", err);
         return res.status(500).json({ error: err.message });
       });
   } catch (error) {
@@ -199,7 +199,7 @@ router.post("/resetPassword", verifyUser, (req, res) => {
               .send({ msg: "You should receive an email from us." });
           })
           .catch((error) => {
-            console.log("Ram = ", error);
+            // console.log("Ram = ", error);
             return res.status(500).send({ error });
           });
       });

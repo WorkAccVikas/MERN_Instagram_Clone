@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { API_BASE_URL } from "../../config/apiConfig";
 
 function Reset() {
-  console.count("Reset");
+  // console.count("Reset");
 
   const [email, setEmail] = useState("");
   const navigate = useNavigate();

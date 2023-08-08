@@ -151,7 +151,7 @@ router.put("/comment", requireLogin, (req, res) => {
         return res.status(200).json(result);
       })
       .catch((err) => {
-        console.log("Error while like post = ", err);
+        // console.log("Error while like post = ", err);
         return res.status(422).json({ error: err });
       });
   } catch (error) {
@@ -170,27 +170,27 @@ router.delete("/deletepost/:postId", requireLogin, (req, res) => {
       .findOne({ _id: req.params.postId })
       .populate("postedBy", "_id")
       .then((data) => {
-        console.log({ data });
-        console.log(typeof data.postedBy._id); // * : object type
+        // console.log({ data });
+        // console.log(typeof data.postedBy._id); // * : object type
         if (data.postedBy._id.toString() === req.user._id.toString()) {
           // ACTION : OWNER of this post
-          console.log("Owner");
+          // console.log("Owner");
           postModel
             .deleteOne({ _id: req.params.postId })
             .then((result) => {
-              console.log({ result });
+              // console.log({ result });
               return res.status(200).json({
                 message: "Post deleted successfully",
                 _id: data._id,
               });
             })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
               return res.status(500).json({ err: "Internal Error" });
             });
         } else {
           // ACTION : Unauthorized user try to delete post
-          console.log("hacker");
+          // console.log("hacker");
           return res
             .status(401)
             .json({ message: "Unable to access this resource" });

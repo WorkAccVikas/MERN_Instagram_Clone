@@ -8,7 +8,7 @@ import { API_BASE_URL } from "../../config/apiConfig";
 // NOTE ; Here, data and time as per IST
 
 function Home() {
-  console.count("Home");
+  // console.count("Home");
   const [data, setData] = useState([]);
   const { state, dispatch } = useContext(UserContext);
 
@@ -118,7 +118,7 @@ function Home() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         const newData = data.filter((item) => {
           return item._id !== result._id;
         });
@@ -230,7 +230,7 @@ function Home() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log(e.target[0].value);
+                // console.log(e.target[0].value);
                 makeComment(e.target[0].value, post._id);
                 e.target[0].value = "";
               }}

@@ -5,13 +5,13 @@ import M from "materialize-css";
 import { API_BASE_URL } from "../../config/apiConfig";
 
 function NewPassword() {
-  console.count("NewPassword");
+  // console.count("NewPassword");
 
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigate = useNavigate();
   const { token } = useParams();
-  console.log(token);
+  // console.log(token);
 
   useEffect(() => {
     document.title = "Instagram - New Password";

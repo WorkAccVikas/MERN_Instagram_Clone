@@ -14,12 +14,12 @@ dayjs.tz.setDefault("America/New_York");
 
 
 function SubscribesUserPosts() {
-  console.count("Home");
+  // console.count("SubscribesUserPosts");
   const [data, setData] = useState([]);
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-        document.title = "Instagram - My Following";
+    document.title = "Instagram - My Following";
 
     fetch(`${API_BASE_URL}/allsubpost`, {
       headers: {
@@ -124,7 +124,7 @@ function SubscribesUserPosts() {
     })
       .then((res) => res.json())
       .then((result) => {
-        console.log(result);
+        // console.log(result);
         const newData = data.filter((item) => {
           return item._id !== result._id;
         });
@@ -233,7 +233,7 @@ function SubscribesUserPosts() {
             <form
               onSubmit={(e) => {
                 e.preventDefault();
-                console.log(e.target[0].value);
+                // console.log(e.target[0].value);
                 makeComment(e.target[0].value, post._id);
                 e.target[0].value = "";
               }}

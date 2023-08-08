@@ -16,7 +16,7 @@ import { API_BASE_URL } from "../config/apiConfig";
 // const set1 = new Set();
 
 function Navbar() {
-  console.count("Navbar");
+  // console.count("Navbar");
 
   const { state, dispatch } = useContext(UserContext);
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ function Navbar() {
         // ACTION : If search field is empty then set data to empty array
         setUserDetails([]);
       } else {
-        console.log("Fetching...............");
+        // console.log("Fetching...............");
         fetch(`${API_BASE_URL}/searchUsers`, {
           method: "POST",
           headers: {
@@ -62,7 +62,7 @@ function Navbar() {
         })
           .then((res) => res.json())
           .then((results) => {
-            console.log({ results });
+            // console.log({ results });
             setUserDetails(results.user);
           });
       }
@@ -73,12 +73,12 @@ function Navbar() {
 
   // ACTION : Debounce on search
   useEffect(() => {
-    console.log("useEffect runs...");
+    // console.log("useEffect runs...");
     let debounce = setTimeout(() => {
       fetchData();
     }, 1000);
     return () => {
-      console.log("cleanup.....");
+      // console.log("cleanup.....");
       clearTimeout(debounce);
     };
   }, [search]);
@@ -121,7 +121,7 @@ function Navbar() {
   // SOLUTION : Optimize : when state change the function is created otherwise not created
 
   const renderList = useMemo(() => {
-    console.count("renderList");
+    // console.count("renderList");
     if (state) {
       return [
         <li key="1">
@@ -174,8 +174,6 @@ function Navbar() {
 
   // set1.add(state);
   // console.log({ set1 });
-
-  console.log("search = ", search);
 
   return (
     <>

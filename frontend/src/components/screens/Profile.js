@@ -5,15 +5,15 @@ import { ACTION } from "../../reducers/userReducer";
 import { API_BASE_URL } from "../../config/apiConfig";
 
 function Profile() {
-  console.count("Profile");
+  // console.count("Profile");
 
   const { state, dispatch } = useContext(UserContext);
-  console.log("state = ", state);
+  // console.log("state = ", state);
   const [mypics, setMyPics] = useState([]);
   const [image, setImage] = useState("");
   const fileInputRef = useRef(null);
 
-  console.log("state = ", state);
+  // console.log("state = ", state);
 
   useEffect(() => {
     document.title = "Instagram - Profile";
@@ -56,7 +56,7 @@ function Profile() {
           })
             .then((res) => res.json())
             .then((result) => {
-              console.log(result);
+              // console.log(result);
               localStorage.setItem(
                 "user",
                 JSON.stringify({ ...state, profile_pic: result.profile_pic })
@@ -84,7 +84,7 @@ function Profile() {
   };
 
   const handleGetFileClick = () => {
-    console.log("vikas");
+    // console.log("vikas");
     fileInputRef.current.click();
   };
 

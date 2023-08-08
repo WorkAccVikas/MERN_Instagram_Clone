@@ -25,7 +25,7 @@ import { API_BASE_URL } from "./config/apiConfig";
 export const UserContext = createContext();
 
 const Routing = () => {
-  console.count("Routing");
+  // console.count("Routing");
   return (
     <Routes>
       <Route
@@ -70,18 +70,18 @@ const Routing = () => {
 };
 
 const Layout = ({ children }) => {
-  console.count("Layout");
+  // console.count("Layout");
 
   const navigate = useNavigate();
   const location = useLocation();
   const { state, dispatch } = useContext(UserContext);
 
   useEffect(() => {
-    console.count("useEffect mounting Layout");
+    // console.count("useEffect mounting Layout");
     const user = JSON.parse(localStorage.getItem("user"));
 
-    console.log("user = ", user);
-    console.log(location);
+    // console.log("user = ", user);
+    // console.log(location);
 
     if (user) {
       dispatch({ type: ACTION.USER, payload: user });
@@ -94,7 +94,7 @@ const Layout = ({ children }) => {
 };
 
 function App() {
-  console.count("App");
+  // console.count("App");
   const [state, dispatch] = useReducer(reducer, initialState);
 
   useEffect(() => {

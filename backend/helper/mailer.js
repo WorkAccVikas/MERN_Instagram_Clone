@@ -78,7 +78,7 @@ function nodeMailerDetails(
   text = "",
   subject = ""
 ) {
-  console.log("nodeMailerDetails");
+  // console.log("nodeMailerDetails");
   let config = {
     service: "gmail",
     auth: {

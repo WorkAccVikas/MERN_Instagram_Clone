@@ -6,9 +6,9 @@ import { ACTION } from "../../reducers/userReducer";
 import { API_BASE_URL } from "../../config/apiConfig";
 
 function UserProfile() {
-  console.count("UserProfile");
+  // console.count("UserProfile");
   const { state, dispatch } = useContext(UserContext);
-  console.log("state = ", state);
+  // console.log("state = ", state);
 
   const [mypics, setMyPics] = useState([]);
   const [userProfile, setProfile] = useState(null);
@@ -37,7 +37,7 @@ function UserProfile() {
   // console.log("ram = ", state !== null);
 
   useEffect(() => {
-    console.count("UserProfile useEffect run");
+    // console.count("UserProfile useEffect run");
     fetch(`${API_BASE_URL}/user/${userid}`, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("jwt"),
@@ -45,7 +45,7 @@ function UserProfile() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         setProfile(data);
       });
   }, []);
@@ -111,7 +111,7 @@ function UserProfile() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        // console.log(data);
         dispatch({
           type: ACTION.UPDATE,
           payload: { following: data.following, followers: data.followers },
@@ -132,7 +132,7 @@ function UserProfile() {
         setShowFollow(true);
       })
       .catch((err) => {
-        console.log("Error while follow user");
+        console.log("Error while unfollow user");
       });
   };
 
@@ -177,9 +177,9 @@ function UserProfile() {
                 <h5>{userProfile.user.followers.length} followers</h5>
                 <h5>{userProfile.user.following.length} following</h5>
               </div>
-              {showfollow && state !== null
+              {/* {showfollow && state !== null
                 ? console.count("Yes")
-                : console.count("No")}
+                : console.count("No")} */}
 
               {showfollow && state !== null ? (
                 <button

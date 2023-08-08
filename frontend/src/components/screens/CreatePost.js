@@ -4,7 +4,7 @@ import M from "materialize-css";
 import { API_BASE_URL } from "../../config/apiConfig";
 
 function CreatePost() {
-  console.count("CreatePost");
+  // console.count("CreatePost");
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");

@@ -234,3 +234,10 @@
 
     BD : 
         - Add HOST in .env file for link in email
+
+38. Both : 
+    FD : 
+        - comment all console.log
+
+    BD : 
+        - comment all console.log

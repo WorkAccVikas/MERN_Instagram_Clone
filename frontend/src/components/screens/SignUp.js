@@ -4,7 +4,7 @@ import M from "materialize-css";
 import { API_BASE_URL } from "../../config/apiConfig";
 
 function SignUp() {
-  console.count("SignUp");
+  // console.count("SignUp");
 
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
